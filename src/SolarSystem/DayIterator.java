@@ -10,5 +10,7 @@ package SolarSystem;
  * @author Gabe
  */
 public class DayIterator {
-    
+
+    //Create a way in order for the person to iterate through a planet's day
+    //Can add more fields to Planet class if that makes things easier
 }
