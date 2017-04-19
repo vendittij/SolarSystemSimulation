@@ -5,7 +5,6 @@
  */
 package SolarSystem;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -18,6 +17,7 @@ public class Planet{
     
     private double period;
     private double velocity;
+    private double semiMinorAxis;
     private double avgDistanceFromSun;
     private double acceleration;
     private double inclination;
@@ -64,10 +64,19 @@ public class Planet{
         this.apoapsis = calculator.calculateApoapsis(this.apoapsisDistanceFromSun, periapsisYCoord);
         this.semiMajorAxis = calculator.calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
         this.eccentricity = calculator.calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
-        this.period = calculator.calculatePeriod(this.semiMajorAxis, this.mass);
+        this.period = calculator.calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
         this.avgVelocty = calculator.calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+        this.semiMinorAxis = calculator.calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
         
+    }
+
+    public double getSemiMinorAxis() {
+        return semiMinorAxis;
+    }
+
+    public void setSemiMinorAxis(double semiMinorAxis) {
+        this.semiMinorAxis = semiMinorAxis;
     }
 
     public double getAvgVelocty() {
@@ -206,13 +215,6 @@ public class Planet{
         this.semiMajorAxis = semiMajorAxis;
     }
 
-    public Algorithms getCalculator() {
-        return calculator;
-    }
-
-    public void setCalculator(Algorithms calculator) {
-        this.calculator = calculator;
-    }
     
     public ArrayList<Moon> getPlanetMoons() {
         return planetMoons;
