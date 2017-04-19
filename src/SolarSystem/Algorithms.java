@@ -112,7 +112,7 @@ public class Algorithms {
     Point2D.Double calculatePeriapsis(double periapsisDistanceFromSun, double YCoord) {
         Point2D.Double periapsis;
 
-        periapsis = new Point2D.Double(-1 * periapsisDistanceFromSun * coordinateScale, YCoord * coordinateScale);
+        periapsis = new Point2D.Double(-1 * periapsisDistanceFromSun * coordinateScale, YCoord);
 
         return periapsis;
     }
@@ -127,7 +127,7 @@ public class Algorithms {
     Point2D.Double calculateApoapsis(double apoapsisDistanceFromSun, double YCoord) {
         Point2D.Double apoapsis;
 
-        apoapsis = new Point2D.Double(apoapsisDistanceFromSun * coordinateScale, -1 * YCoord * coordinateScale);
+        apoapsis = new Point2D.Double(apoapsisDistanceFromSun * coordinateScale, -1 * YCoord);
 
         return apoapsis;
     }
