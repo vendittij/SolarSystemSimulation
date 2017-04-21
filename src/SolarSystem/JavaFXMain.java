@@ -7,21 +7,16 @@ package SolarSystem;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.pow;
-import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
-import javafx.animation.PathTransition.OrientationType;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  *
@@ -33,6 +28,7 @@ public class JavaFXMain extends Application {
     private PathTransition pathTransition2 = new PathTransition();
     private PathTransition pathTransitionEllipse;
     private PathTransition pathTransitionCircle;
+    private Algorithms calculator = new Algorithms();
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -63,90 +59,50 @@ public class JavaFXMain extends Application {
 
         Planet earth = new Planet("Earth", 152100000, 147100000, 20100023, 5.972 * pow(10, 24), 2, 100);
         Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
+        Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8, 8);
 
         primaryStage.show();
 
         Sphere sphere = new Sphere(10); //Create a sphere that has a raidus of 10
         Sphere sphere2 = new Sphere(10);
+        Sphere sphere3 = new Sphere(10);
         Sphere sun = new Sphere(20);
 
         sun.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2); // This will give you the center of the created Scene
-        //double centerX = primaryStage.getWidth() /2 + 120;
-        double centerX = primaryStage.getWidth() / 2 + 100 + earth.getSemiMajorAxis() * earth.getSemiMinorAxis();
-        double centerY = primaryStage.getHeight() / 2 + 20;
 
-        System.out.println(primaryStage.getWidth());
-        System.out.println(primaryStage.getHeight());
-        System.out.println(centerX);
-        System.out.println(centerY);
+        double centerX = calculator.calculateCenterX(primaryStage, earth.getEccentricity(), earth.getSemiMajorAxis(), earth.getApoapsisDistanceFromSun());
+        double centerY = calculator.calculateCenterY(primaryStage);
+        double semiMajorAxisCoords = calculator.calculateCoordsConversion(earth.getSemiMajorAxis());
+        double semiMinorAxisCoords = calculator.calculateCoordsConversion(earth.getSemiMinorAxis());
+        double apoapsisDistanceCoords = calculator.apoapsisCoordsConversion(earth.getApoapsisDistanceFromSun());
+        double inclination = earth.getInclination();
+        Path path = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
+        pathTransition = calculator.createPathTransition(earth.getPeriod(), sphere, path);
 
-        Path path = createEllipsePath(centerX, centerY, earth.getSemiMajorAxis() * 100, earth.getSemiMinorAxis() * 100, 90); //Goes to the method and creates a proper ellipse
-        path.getElements().add(new ClosePath()); //Ensures that the path is closed
+        centerX = calculator.calculateCenterX(primaryStage, mars.getEccentricity(), mars.getSemiMajorAxis(), earth.getApoapsisDistanceFromSun());
+        centerY = calculator.calculateCenterY(primaryStage);
+        semiMajorAxisCoords = calculator.calculateCoordsConversion(mars.getSemiMajorAxis());
+        semiMinorAxisCoords = calculator.calculateCoordsConversion(mars.getSemiMinorAxis());
+        inclination = mars.getInclination();
+        Path path2 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
+        pathTransition2 = calculator.createPathTransition(mars.getPeriod(), sphere2, path2);
 
-        pathTransition.setDuration(Duration.seconds((earth.getPeriod() * 365 * 24 * 60 * 60) / 1000000));    //Controls how fast the planet is going
-        pathTransition.setNode(sphere);                     //Puts the sphere on the path of the ellipse
-        pathTransition.setPath(path);                       //Sets the path the sphere will follow as the ellipse
-        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);   //Not 100% sure what this does but it was in the example and it works
-        pathTransition.setCycleCount(Timeline.INDEFINITE);                      //Makes this run forver until we say stop.
-        pathTransition.setInterpolator(Interpolator.LINEAR);                    //Makes the runs between each iteration of the sphere going around the ellipse continuous instead of chopped up
-        pathTransition.play();
-
-        centerX = primaryStage.getWidth() / 2 + 100 + mars.getSemiMajorAxis() * mars.getSemiMinorAxis();
-        centerY = primaryStage.getHeight() / 2 + 20;
-
-        Ellipse ellipse = new Ellipse(centerX, centerY, mars.getSemiMajorAxis() * 100, mars.getSemiMinorAxis() * 100);
-
-        Path path2 = createEllipsePath(ellipse.getCenterX(), ellipse.getCenterY(), mars.getSemiMajorAxis() * 100, mars.getSemiMinorAxis() * 100, 0);
-        pathTransition2.setDuration(Duration.seconds(4));
-        pathTransition2.setNode(sphere2);                     //Puts the sphere on the path of the ellipse
-        pathTransition2.setPath(path2);                       //Sets the path the sphere will follow as the ellipse
-        pathTransition2.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);   //Not 100% sure what this does but it was in the example and it works
-        pathTransition2.setCycleCount(Timeline.INDEFINITE);                      //Makes this run forver until we say stop.
-        pathTransition2.setInterpolator(Interpolator.LINEAR);                    //Makes the runs between each iteration of the sphere going around the ellipse continuous instead of chopped up
-        pathTransition2.setOrientation(OrientationType.NONE);
-        pathTransition2.play();
+        centerX = calculator.calculateCenterX(primaryStage, jupiter.getEccentricity(), jupiter.getSemiMajorAxis(), jupiter.getApoapsisDistanceFromSun());
+        centerY = calculator.calculateCenterY(primaryStage);
+        semiMajorAxisCoords = calculator.calculateCoordsConversion(jupiter.getSemiMajorAxis());
+        semiMinorAxisCoords = calculator.calculateCoordsConversion(jupiter.getSemiMinorAxis());
+        inclination = mars.getInclination();
+        Path path3 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
+        pathTransition2 = calculator.createPathTransition(mars.getPeriod(), sphere2, path2);
 
         root.getChildren().add(sphere);
         root.getChildren().add(sphere2);
+        root.getChildren().add(sphere3);
         root.getChildren().add(sun);
         root.getChildren().add(path);
         root.getChildren().add(path2);
+        root.getChildren().add(path3);
 
-    }
-
-    /**
-     * *************************************************************************************
-     * Title: Create Ellipse path Author: Uluk Biy Date: April 14th, 2017 Code
-     * version: 1.0 Availability:
-     * http://stackoverflow.com/questions/14171856/javafx-2-circle-path-for-animation
-     *
-     **************************************************************************************
-     */
-    private Path createEllipsePath(double centerX, double centerY, double radiusX, double radiusY, double rotate) {
-        ArcTo arcTo = new ArcTo();
-        arcTo.setX(centerX - radiusX + 1); // to simulate a full 360 degree celcius circle.
-        arcTo.setY(centerY - radiusY);
-        arcTo.setSweepFlag(false);
-        arcTo.setLargeArcFlag(true);
-        arcTo.setRadiusX(radiusX);
-        arcTo.setRadiusY(radiusY);
-        arcTo.setXAxisRotation(rotate);
-
-        Path path = PathBuilder.create()
-                .elements(
-                        new MoveTo(centerX - radiusX, centerY - radiusY),
-                        arcTo,
-                        new ClosePath()) // close 1 px gap.
-                .build();
-        path.setStroke(Color.WHITE);
-        return path;
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
