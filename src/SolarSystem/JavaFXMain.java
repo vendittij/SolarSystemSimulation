@@ -39,6 +39,7 @@ public class JavaFXMain extends Application {
     private PathTransition pathTransition2 = new PathTransition();
     private PathTransition pathTransitionEllipse;
     private PathTransition pathTransitionCircle;
+    private PathTransition pathTransition3 = new PathTransition();
     private Algorithms calculator = new Algorithms();
 
     @Override
@@ -55,10 +56,23 @@ public class JavaFXMain extends Application {
         String source = file.toURI().toString();
         AudioClip music = new AudioClip(source);
         music.play();
+        // first directory I wanted to start in. The way I got it here made it possible to play it on my computer,
+        // so it's possible to get it working if we follow similar on the linux computers when we put it there.
 
-        Planet earth = new Planet("Earth", 152100000, 147100000, 20100023, 5.972 * pow(10, 24), 2, 100);
+        // Media sound = new Media(musicFile);     //Create the media by directly putting the file name into it. Nothing else is needed.
+        //MediaPlayer mediaPlayer = new MediaPlayer(sound);  //Create the media player by using the media object just created
+        //mediaPlayer.setAutoPlay(true);                      //Automatically begins playing the music. Can turn this off and set them to buttons easily if we'd like.
+        //mediaPlayer.setVolume(0.1);                         //Sets volume to a tenth of it's original volume.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Planet earth = new Planet("Earth", 152100000, 147100000, 6000, 5.972 * pow(10, 24), 2, 100);
         Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
         Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8, 8);
+        Planet venus = new Planet("Venus", 108.939 * pow(10, 6), 107.477 * pow(10, 6), 6000, 4.8 * pow(10, 24), 20, 12);
+        SolarSystem test = new SolarSystem("New");
+        test.addPlanet(mars);
+        test.addPlanet(earth);
+        test.addPlanet(venus);
+        test.addPlanet(jupiter);
 
         primaryStage.show();
 
@@ -142,10 +156,9 @@ public class JavaFXMain extends Application {
         root.getChildren().add(sphere2);
         root.getChildren().add(sphere3);
         root.getChildren().add(light);
+
         root.getChildren().add(sun);
-        root.getChildren().add(path);
-        root.getChildren().add(path2);
-        root.getChildren().add(path3);
+        test.setSystemToRoot(root, primaryStage); // A function that adds the solar system to the root
 
         //scene.setCamera(camera);
         path.toBack();
@@ -167,11 +180,7 @@ public class JavaFXMain extends Application {
         });
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
-
     }
 }

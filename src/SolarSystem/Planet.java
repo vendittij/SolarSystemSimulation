@@ -7,34 +7,36 @@ package SolarSystem;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import javafx.animation.PathTransition;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Sphere;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Gabe
  */
-public class Planet extends Sphere {
+public class Planet {
 
     private double period;
-    private double velocity;
     private double semiMinorAxis;
     private double avgDistanceFromSun;
     private double acceleration;
     private double inclination;
     private double eccentricity;
-    private double planetRaidus;
+    private double planetRadius;
     private double mass;
     private double currentDistanceFromSun;
-    private Point2D.Double position;
     private String name;
-    private Point2D.Double apoapsis;
-    private Point2D.Double periapsis;
     private double apoapsisDistanceFromSun;
     private double periapsisDistanceFromSun;
     private double semiMajorAxis;
     private double avgVelocty;
     private Algorithms calculator = new Algorithms();
     private ArrayList<Moon> planetMoons = new ArrayList<>();
+    private Path path;
+    private PathTransition pathTransition;
+    private Sphere sphere;
 
     /**
      * The constructor for all Planet objects
@@ -49,19 +51,17 @@ public class Planet extends Sphere {
      */
     public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, double periapsisYCoord) {
 
-        super(10);
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
         this.periapsisDistanceFromSun = periapsisDistance;
-        this.planetRaidus = planetRadius;
+        this.planetRadius = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
+        this.sphere = calculator.createSphere(this.planetRadius);
 
         this.apoapsisDistanceFromSun = calculator.convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
         this.periapsisDistanceFromSun = calculator.convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
 
-        this.periapsis = calculator.calculatePeriapsis(this.periapsisDistanceFromSun, periapsisYCoord);
-        this.apoapsis = calculator.calculateApoapsis(this.apoapsisDistanceFromSun, periapsisYCoord);
         this.semiMajorAxis = calculator.calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
         this.eccentricity = calculator.calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
         this.period = calculator.calculatePeriod(this.semiMajorAxis);
@@ -97,14 +97,6 @@ public class Planet extends Sphere {
         this.period = period;
     }
 
-    public double getVelocity() {
-        return calculator.calculateVelocity(this.getCurrentDistanceFromSun(this.position), this.semiMajorAxis, this.mass, this.period);
-    }
-
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
-    }
-
     public double getAvgDistanceFromSun() {
         return avgDistanceFromSun;
     }
@@ -137,12 +129,12 @@ public class Planet extends Sphere {
         this.eccentricity = eccentricity;
     }
 
-    public double getPlanetRaidus() {
-        return planetRaidus;
+    public double getPlanetRadius() {
+        return planetRadius;
     }
 
-    public void setPlanetRaidus(double planetRaidus) {
-        this.planetRaidus = planetRaidus;
+    public void setPlanetRadius(double planetRadius) {
+        this.planetRadius = planetRadius;
     }
 
     public double getMass() {
@@ -161,36 +153,12 @@ public class Planet extends Sphere {
         this.currentDistanceFromSun = currentDistanceFromSun;
     }
 
-    public Point2D.Double getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point2D.Double position) {
-        this.position = position;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Point2D.Double getApoapsis() {
-        return apoapsis;
-    }
-
-    public void setApoapsis(Point2D.Double apoapsis) {
-        this.apoapsis = apoapsis;
-    }
-
-    public Point2D.Double getPeriapsis() {
-        return periapsis;
-    }
-
-    public void setPeriapsis(Point2D.Double periapsis) {
-        this.periapsis = periapsis;
     }
 
     public double getApoapsisDistanceFromSun() {
@@ -229,4 +197,25 @@ public class Planet extends Sphere {
         planetMoons.add(newMoon);
     }
 
+    public Sphere getPlanet() {
+        return this.sphere;
+    }
+
+    public Path getPath() {
+        return this.path;
+    }
+
+    public PathTransition getPathTransition() {
+        return this.pathTransition;
+    }
+
+    public void setPath(Stage primaryStage) {
+
+        double centerX = calculator.calculateCenterX(primaryStage, this.eccentricity, this.semiMajorAxis, this.apoapsisDistanceFromSun);
+        double centerY = calculator.calculateCenterY(primaryStage);
+        double semiMajorAxisCoords = calculator.calculateCoordsConversion(this.semiMajorAxis);
+        double semiMinorAxisCoords = calculator.calculateCoordsConversion(this.semiMinorAxis);
+        this.path = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
+        this.pathTransition = calculator.createPathTransition(this.period, this.sphere, this.path);
+    }
 }

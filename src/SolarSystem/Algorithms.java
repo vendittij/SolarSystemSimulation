@@ -25,7 +25,7 @@ public class Algorithms {
 
     Point2D.Double sun = new Point2D.Double(400, 350); // The Sun will be at the origin of our view
     double gravitationalConstant = 6.67408 * pow(10, -11); // The gravitational constant
-    double coordinateScale = 100;                  //The scale for going from AU to coordinate
+    double coordinateScale = 200;                  //The scale for going from AU to coordinate
     double AUToKM = 1.496 * pow(10, 8);              //Proportion for going from AU to kilometers
     double massOfSun = 1.989 * pow(10, 30);          //Mass of the sun
 
@@ -233,7 +233,7 @@ public class Algorithms {
     double calculateCenterX(Stage primaryStage, double eccentricity, double semiMajorAxis, double apoapsisDistance) {
         double x;
 
-        x = primaryStage.getWidth() / 2 + eccentricity * 100 + semiMajorAxis * 100 + apoapsisCoordsConversion(apoapsisDistance);
+        x = primaryStage.getWidth() / 2 + eccentricity * coordinateScale + semiMajorAxis * coordinateScale + apoapsisCoordsConversion(apoapsisDistance) + 10;
 
         return x;
     }
@@ -246,12 +246,13 @@ public class Algorithms {
         return y;
     }
 
-    double calculateCoordsConversion(double semiMajorAxis) {
-        return semiMajorAxis * coordinateScale;
-    }
+    Sphere createSphere(double radius) {
+        Sphere sphere = new Sphere();
+        double sphereConversionRate = 500;     //For KM to coords
 
-    double apoapsisCoordsConversion(double apoapsisDistance) {
-        return apoapsisDistance * 5;
+        sphere.setRadius(radius / sphereConversionRate);
+
+        return sphere;
     }
 
     /**
@@ -277,6 +278,16 @@ public class Algorithms {
                         new ClosePath()) // close 1 px gap.
                 .build();
         path.setStroke(Color.WHITE);
+        path.toBack();
         return path;
     }
+
+    double calculateCoordsConversion(double semiMajorAxis) {
+        return semiMajorAxis * coordinateScale;
+    }
+
+    double apoapsisCoordsConversion(double apoapsisDistance) {
+        return apoapsisDistance * 5;
+    }
+
 }
