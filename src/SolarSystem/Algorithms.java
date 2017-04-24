@@ -17,8 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * The algorithms class holds all algorithms associated with information a
- * planet may have.
+ * The algorithms class holds all algorithms associated with information a planet may have.
  *
  * @author Gabe
  */
@@ -31,13 +30,11 @@ public class Algorithms {
     double massOfSun = 1.989 * pow(10, 30);          //Mass of the sun
 
     /**
-     * A method for converting the distance of the apoapsis that was given in
-     * Kilometers to astronomical units (AU)
+     * A method for converting the distance of the apoapsis that was given in Kilometers to astronomical units (AU)
      *
      * @param apoapsisDistance - The distance the apoapsis is from the sun
      *
-     * @return double : The conversion from Kilometers to astronomical units for
-     * the apoapsis
+     * @return double : The conversion from Kilometers to astronomical units for the apoapsis
      */
     double convertApoapsisDistanceToAU(double apoapsisDistance) {
         double AUApoapsisDistance;
@@ -48,14 +45,11 @@ public class Algorithms {
     }
 
     /**
-     * A method for converting the distance of the periapsis that given in
-     * kilometers to AU
+     * A method for converting the distance of the periapsis that given in kilometers to AU
      *
-     * @param periapsisDistance - The distance that the periapsis is from the
-     * sun
+     * @param periapsisDistance - The distance that the periapsis is from the sun
      *
-     * @return double : The conversion from Kilometers to astronomical units for
-     * the periapsis
+     * @return double : The conversion from Kilometers to astronomical units for the periapsis
      */
     double convertPeriapsisDistanceToAU(double periapsisDistance) {
         double AUPeriapsisDistance;
@@ -69,8 +63,7 @@ public class Algorithms {
      * A method that calculates the semiMajorAxis of the planet
      *
      * @param apoapsisDistance - The distance that the apoapsis is from the sun
-     * @param periapsisDistance - The distance that the periapsis is from the
-     * sun
+     * @param periapsisDistance - The distance that the periapsis is from the sun
      *
      * @return double : The semi-major axis of the elliptical orbit
      */
@@ -82,8 +75,7 @@ public class Algorithms {
      * A method that calculates the eccentricity of the planet
      *
      * @param apoapsisDistance - The distance the apoapsis is from the sun
-     * @param semiMajorAxis - Also known as the average distance of the planet
-     * from the sun
+     * @param semiMajorAxis - Also known as the average distance of the planet from the sun
      *
      * @return double : The eccentricity of the orbit
      */
@@ -98,8 +90,7 @@ public class Algorithms {
     /**
      * A method that calculates the period of the planet
      *
-     * @param semiMajorAxis - Also known as the average distance of the planet
-     * from the sun
+     * @param semiMajorAxis - Also known as the average distance of the planet from the sun
      *
      * @return double : The period of the planet for its orbit
      */
@@ -123,8 +114,7 @@ public class Algorithms {
     /**
      * A method that returns the point of the periapsis of the planet
      *
-     * @param periapsisDistanceFromSun - The distance the periapsis is from the
-     * sun
+     * @param periapsisDistanceFromSun - The distance the periapsis is from the sun
      * @param YCoord - The Y coordinate for where to place periapsis
      *
      * @return Point2D.Double : Gives the point of the periapsis for the planet
@@ -141,10 +131,8 @@ public class Algorithms {
     /**
      * A method that returns the point of the apoapsis of the planet
      *
-     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the
-     * sun
-     * @param YCoord - The Y coordinate for where to place apoapsis (relative to
-     * periapsis)
+     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the sun
+     * @param YCoord - The Y coordinate for where to place apoapsis (relative to periapsis)
      *
      * @return Point2D.Double : Gives the point of the apoapsis
      */
@@ -158,13 +146,10 @@ public class Algorithms {
     }
 
     /**
-     * A method that calculates the average velocity of a planet. Uses the
-     * calculateVelocity() method to do so
+     * A method that calculates the average velocity of a planet. Uses the calculateVelocity() method to do so
      *
-     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the
-     * sun
-     * @param periapsisDistanceFromSun - The distance the periapsis is from the
-     * sun
+     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the sun
+     * @param periapsisDistanceFromSun - The distance the periapsis is from the sun
      * @param mass - The mass of the planet in question
      * @param semiMajorAxis - The average distance of the planet from the sun
      * @param period - The length of time it takes for one full revolution
@@ -185,12 +170,10 @@ public class Algorithms {
     /**
      * A method that calculates the velocity
      *
-     * @param radiusFromSun - The distance that the planet currently is from the
-     * sun
+     * @param radiusFromSun - The distance that the planet currently is from the sun
      * @param semiMajorAxis - The average distance of the planet from the sun
      * @param mass - The mass of the planet
-     * @param period - The length of time it takes for the planet to complete
-     * one revolution (relative to earth year)
+     * @param period - The length of time it takes for the planet to complete one revolution (relative to earth year)
      *
      * @return double : The velocity of the planet based off current position
      */
@@ -214,13 +197,10 @@ public class Algorithms {
     /**
      * A method that calculates the semi-minor axis
      *
-     * @param semiMajorAxis - The average distance that the planet is from the
-     * sun
-     * @param eccentricity - Determines how close the sun is to the -apsis and
-     * how ovular the ellipse is
+     * @param semiMajorAxis - The average distance that the planet is from the sun
+     * @param eccentricity - Determines how close the sun is to the -apsis and how ovular the ellipse is
      *
-     * @return double : The semi-minor axis a.k.a the Y distance for the
-     * ellipse.
+     * @return double : The semi-minor axis a.k.a the Y distance for the ellipse.
      */
     double calculateSemiMinorAxis(double semiMajorAxis, double eccentricity) {
         double semiMinorAxis;
@@ -240,6 +220,7 @@ public class Algorithms {
 
         transition.setDuration(Duration.millis(duration));
         transition.setNode(planet);
+        transition.setPath(path);
         transition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
         transition.setInterpolator(Interpolator.LINEAR);
         transition.setCycleCount(Timeline.INDEFINITE);
@@ -274,9 +255,7 @@ public class Algorithms {
 
     /**
      * *************************************************************************************
-     * Title: Create Ellipse path Author: Uluk Biy Date: April 14th, 2017 Code
-     * version: 1.0 Availability:
-     * http://stackoverflow.com/questions/14171856/javafx-2-circle-path-for-animation
+     * Title: Create Ellipse path Author: Uluk Biy Date: April 14th, 2017 Code version: 1.0 Availability: http://stackoverflow.com/questions/14171856/javafx-2-circle-path-for-animation
      *
      **************************************************************************************
      */

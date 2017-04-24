@@ -7,14 +7,14 @@ package SolarSystem;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-
+import javafx.scene.shape.Sphere;
 
 /**
  *
  * @author Gabe
  */
-public class Planet{
-    
+public class Planet extends Sphere {
+
     private double period;
     private double velocity;
     private double semiMinorAxis;
@@ -36,11 +36,10 @@ public class Planet{
     private Algorithms calculator = new Algorithms();
     private ArrayList<Moon> planetMoons = new ArrayList<>();
 
-    
     /**
      * The constructor for all Planet objects
-     * 
-     * @param name 
+     *
+     * @param name
      * @param apoapsisDistance
      * @param periapsisDistance
      * @param planetRadius
@@ -49,17 +48,18 @@ public class Planet{
      * @param periapsisYCoord
      */
     public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, double periapsisYCoord) {
-        
+
+        super(10);
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
         this.periapsisDistanceFromSun = periapsisDistance;
         this.planetRaidus = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
-        
+
         this.apoapsisDistanceFromSun = calculator.convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
         this.periapsisDistanceFromSun = calculator.convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
-  
+
         this.periapsis = calculator.calculatePeriapsis(this.periapsisDistanceFromSun, periapsisYCoord);
         this.apoapsis = calculator.calculateApoapsis(this.apoapsisDistanceFromSun, periapsisYCoord);
         this.semiMajorAxis = calculator.calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
@@ -67,8 +67,9 @@ public class Planet{
         this.period = calculator.calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
         this.avgVelocty = calculator.calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+
         this.semiMinorAxis = calculator.calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
-        
+
     }
 
     public double getSemiMinorAxis() {
@@ -77,6 +78,7 @@ public class Planet{
 
     public void setSemiMinorAxis(double semiMinorAxis) {
         this.semiMinorAxis = semiMinorAxis;
+
     }
 
     public double getAvgVelocty() {
@@ -215,7 +217,6 @@ public class Planet{
         this.semiMajorAxis = semiMajorAxis;
     }
 
-    
     public ArrayList<Moon> getPlanetMoons() {
         return planetMoons;
     }
@@ -223,8 +224,9 @@ public class Planet{
     public void setPlanetMoons(ArrayList<Moon> planetMoons) {
         this.planetMoons = planetMoons;
     }
-    
+
     public void addMoon(Moon newMoon) {
         planetMoons.add(newMoon);
     }
+
 }

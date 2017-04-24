@@ -4,7 +4,6 @@
  */
 package SolarSystem;
 
-import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.pow;
 import javafx.animation.PathTransition;
@@ -12,9 +11,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 
@@ -38,7 +36,7 @@ public class JavaFXMain extends Application {
         Scene scene = new Scene(root, 800, 800);
         scene.setFill(pattern); //Sets the background of the scene to be the following.
         primaryStage.setScene(scene);
-
+        /*
         String absPath = "";                            //Initialize the string for the path to song
         File file = new File("src/Day_N_Nite.mp3");     // The source file. Need the immediate folder it is in so this works.
         absPath = file.getAbsolutePath();
@@ -55,7 +53,7 @@ public class JavaFXMain extends Application {
         Media sound = new Media(musicFile);     //Create the media by directly putting the file name into it. Nothing else is needed.
         MediaPlayer mediaPlayer = new MediaPlayer(sound);  //Create the media player by using the media object just created
         mediaPlayer.setAutoPlay(true);                      //Automatically begins playing the music. Can turn this off and set them to buttons easily if we'd like.
-        mediaPlayer.setVolume(0.1);                         //Sets volume to a tenth of it's original volume.
+        mediaPlayer.setVolume(0.1);     */                    //Sets volume to a tenth of it's original volume.
 
         Planet earth = new Planet("Earth", 152100000, 147100000, 20100023, 5.972 * pow(10, 24), 2, 100);
         Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
@@ -63,11 +61,26 @@ public class JavaFXMain extends Application {
 
         primaryStage.show();
 
-        Sphere sphere = new Sphere(10); //Create a sphere that has a raidus of 10
-        Sphere sphere2 = new Sphere(10);
-        Sphere sphere3 = new Sphere(10);
+        Sphere sphere = new Sphere(15); //Create a sphere that has a raidus of 10
+        Sphere sphere2 = new Sphere(15);
+        Sphere sphere3 = new Sphere(15);
         Sphere sun = new Sphere(20);
 
+        //Adding material to spheres
+        PhongMaterial mat = new PhongMaterial();
+        Image diffuseMap = new Image("file:earth.png");
+        mat.setDiffuseMap(diffuseMap);
+
+        PhongMaterial mat2 = new PhongMaterial();
+        Image diffuseMap2 = new Image("file:mars.jpg");
+        mat2.setDiffuseMap(diffuseMap2);
+
+        sphere.setMaterial(mat);
+        sphere.setDrawMode(DrawMode.FILL);
+        sphere2.setMaterial(mat2);
+        sphere2.setDrawMode(DrawMode.FILL);
+
+        //CENTERING THE SUN
         sun.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2); // This will give you the center of the created Scene
 
         double centerX = calculator.calculateCenterX(primaryStage, earth.getEccentricity(), earth.getSemiMajorAxis(), earth.getApoapsisDistanceFromSun());
@@ -86,6 +99,7 @@ public class JavaFXMain extends Application {
         inclination = mars.getInclination();
         Path path2 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
         pathTransition2 = calculator.createPathTransition(mars.getPeriod(), sphere2, path2);
+        pathTransition2.play();
 
         centerX = calculator.calculateCenterX(primaryStage, jupiter.getEccentricity(), jupiter.getSemiMajorAxis(), jupiter.getApoapsisDistanceFromSun());
         centerY = calculator.calculateCenterY(primaryStage);
@@ -93,7 +107,8 @@ public class JavaFXMain extends Application {
         semiMinorAxisCoords = calculator.calculateCoordsConversion(jupiter.getSemiMinorAxis());
         inclination = mars.getInclination();
         Path path3 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        pathTransition2 = calculator.createPathTransition(mars.getPeriod(), sphere2, path2);
+        PathTransition pathTransition3 = calculator.createPathTransition(jupiter.getPeriod(), sphere3, path3);
+        pathTransition3.play();
 
         root.getChildren().add(sphere);
         root.getChildren().add(sphere2);
@@ -105,4 +120,11 @@ public class JavaFXMain extends Application {
 
     }
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+
+    }
 }
