@@ -73,7 +73,7 @@ public class Planet {
                 this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
         this.eccentricity = calculator.calculatEccentricity(
                 this.apoapsisDistanceFromSun, this.semiMajorAxis);
-        this.period = calculator.calculatePeriod(this.semiMajorAxis);
+        this.period = calculator.calculatePeriod(this.semiMajorAxis, this.mass);
         this.avgDistanceFromSun = this.semiMajorAxis;
         this.avgVelocty = calculator.calculateAverageVelocty(
                 apoapsisDistanceFromSun, periapsisDistanceFromSun, mass,
