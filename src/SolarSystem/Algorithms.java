@@ -221,9 +221,10 @@ public class Algorithms {
         transition.setDuration(Duration.millis(duration));
         transition.setNode(planet);
         transition.setPath(path);
-        transition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+        transition.setOrientation(OrientationType.NONE);
         transition.setInterpolator(Interpolator.LINEAR);
         transition.setCycleCount(Timeline.INDEFINITE);
+
         transition.play();
 
         return transition;
