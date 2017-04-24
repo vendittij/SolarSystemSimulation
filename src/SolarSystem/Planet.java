@@ -5,24 +5,26 @@
  */
 package SolarSystem;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-
+import javafx.scene.image.Image;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Sphere;
 
 /**
  *
  * @author Gabe
  */
-public class Planet{
-    
+public class Planet {
+
     private double period;
     private double velocity;
+    private double semiMinorAxis;
     private double avgDistanceFromSun;
     private double acceleration;
     private double inclination;
     private double eccentricity;
-    private double planetRaidus;
+    private double planetRadius;
     private double mass;
     private double currentDistanceFromSun;
     private Point2D.Double position;
@@ -35,12 +37,12 @@ public class Planet{
     private double avgVelocty;
     private Algorithms calculator = new Algorithms();
     private ArrayList<Moon> planetMoons = new ArrayList<>();
+    private Sphere sphere;
 
-    
     /**
      * The constructor for all Planet objects
-     * 
-     * @param name 
+     *
+     * @param name
      * @param apoapsisDistance
      * @param periapsisDistance
      * @param planetRadius
@@ -48,26 +50,45 @@ public class Planet{
      * @param inclination
      * @param periapsisYCoord
      */
-    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, double periapsisYCoord) {
-        
+    public Planet(String name, double apoapsisDistance, double periapsisDistance,
+                  double planetRadius, double mass, double inclination,
+                  double periapsisYCoord) {
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
         this.periapsisDistanceFromSun = periapsisDistance;
-        this.planetRaidus = planetRadius;
+        this.planetRadius = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
-        
-        this.apoapsisDistanceFromSun = calculator.convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
-        this.periapsisDistanceFromSun = calculator.convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
-  
-        this.periapsis = calculator.calculatePeriapsis(this.periapsisDistanceFromSun, periapsisYCoord);
-        this.apoapsis = calculator.calculateApoapsis(this.apoapsisDistanceFromSun, periapsisYCoord);
-        this.semiMajorAxis = calculator.calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
-        this.eccentricity = calculator.calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
-        this.period = calculator.calculatePeriod(this.semiMajorAxis, this.mass);
+
+        this.apoapsisDistanceFromSun = calculator.convertApoapsisDistanceToAU(
+                this.apoapsisDistanceFromSun);
+        this.periapsisDistanceFromSun = calculator.convertPeriapsisDistanceToAU(
+                this.periapsisDistanceFromSun);
+
+        this.periapsis = calculator.calculatePeriapsis(
+                this.periapsisDistanceFromSun, periapsisYCoord);
+        this.apoapsis = calculator.calculateApoapsis(
+                this.apoapsisDistanceFromSun, periapsisYCoord);
+        this.semiMajorAxis = calculator.calculatSemiMajorAxis(
+                this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
+        this.eccentricity = calculator.calculatEccentricity(
+                this.apoapsisDistanceFromSun, this.semiMajorAxis);
+        this.period = calculator.calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
-        this.avgVelocty = calculator.calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
-        
+        this.avgVelocty = calculator.calculateAverageVelocty(
+                apoapsisDistanceFromSun, periapsisDistanceFromSun, mass,
+                semiMajorAxis, this.period);
+        this.semiMinorAxis = calculator.calculateSemiMinorAxis(
+                this.semiMajorAxis, this.eccentricity);
+
+    }
+
+    public double getSemiMinorAxis() {
+        return semiMinorAxis;
+    }
+
+    public void setSemiMinorAxis(double semiMinorAxis) {
+        this.semiMinorAxis = semiMinorAxis;
     }
 
     public double getAvgVelocty() {
@@ -87,7 +108,8 @@ public class Planet{
     }
 
     public double getVelocity() {
-        return calculator.calculateVelocity(this.getCurrentDistanceFromSun(this.position), this.semiMajorAxis, this.mass, this.period);
+        return calculator.calculateVelocity(this.getCurrentDistanceFromSun(
+                this.position), this.semiMajorAxis, this.mass, this.period);
     }
 
     public void setVelocity(double velocity) {
@@ -127,11 +149,11 @@ public class Planet{
     }
 
     public double getPlanetRaidus() {
-        return planetRaidus;
+        return planetRadius;
     }
 
     public void setPlanetRaidus(double planetRaidus) {
-        this.planetRaidus = planetRaidus;
+        this.planetRadius = planetRaidus;
     }
 
     public double getMass() {
@@ -206,14 +228,6 @@ public class Planet{
         this.semiMajorAxis = semiMajorAxis;
     }
 
-    public Algorithms getCalculator() {
-        return calculator;
-    }
-
-    public void setCalculator(Algorithms calculator) {
-        this.calculator = calculator;
-    }
-    
     public ArrayList<Moon> getPlanetMoons() {
         return planetMoons;
     }
@@ -221,8 +235,15 @@ public class Planet{
     public void setPlanetMoons(ArrayList<Moon> planetMoons) {
         this.planetMoons = planetMoons;
     }
-    
+
     public void addMoon(Moon newMoon) {
         planetMoons.add(newMoon);
+    }
+
+    public void wrapImage(String filePath) {
+        PhongMaterial mat = new PhongMaterial();
+        Image diffuseMap = new Image("file:" + filePath);
+        mat.setDiffuseMap(diffuseMap);
+        this.sphere.setMaterial(mat);
     }
 }
