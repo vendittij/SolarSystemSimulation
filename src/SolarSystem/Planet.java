@@ -67,6 +67,7 @@ public class Planet {
         this.period = calculator.calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
         this.avgVelocty = calculator.calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+
         this.semiMinorAxis = calculator.calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
 
     }
@@ -77,6 +78,7 @@ public class Planet {
 
     public void setSemiMinorAxis(double semiMinorAxis) {
         this.semiMinorAxis = semiMinorAxis;
+
     }
 
     public double getAvgVelocty() {
