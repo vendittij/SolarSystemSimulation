@@ -18,7 +18,7 @@ public class PlanetTestMain {
      */
     public static void main(String[] args) {
 
-        Planet earth = new Planet("Earth", 147100000, 152100000, 20100023, 5.972 * pow(10, 24), 2, 12);
+        Planet earth = new Planet("Earth", 147100000, 152100000, 20100023, 5.972 * pow(10, 24), 2);
         System.out.printf("Name: %s\n", earth.getName());
         System.out.printf("Average Velocity: %f\n", earth.getAvgVelocty());
         System.out.printf("Acceleration: %f\n", earth.getAcceleration());
@@ -36,7 +36,7 @@ public class PlanetTestMain {
         //System.out.printf("Current Distance From Sun: %f\n", earth.getCurrentDistanceFromSun(earth.getPosition()));
         //System.out.printf("Velocity at this distance: %f\n\n", earth.getVelocity());
 
-        Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
+        Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20);
         System.out.printf("Name: %s\n", mars.getName());
         System.out.printf("Average Velocity: %f\n", mars.getAvgVelocty());
         System.out.printf("Acceleration: %f\n", mars.getAcceleration());
@@ -52,7 +52,7 @@ public class PlanetTestMain {
         System.out.printf("Planet Radius: %f\n", mars.getPlanetRadius());
         System.out.printf("Semi-Major Axis: %f\n\n", mars.getSemiMajorAxis());
 
-        Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8, 8);
+        Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8);
         System.out.printf("Name: %s\n", jupiter.getName());
         System.out.printf("Average Velocity: %f\n", jupiter.getAvgVelocty());
         System.out.printf("Acceleration: %f\n", jupiter.getAcceleration());

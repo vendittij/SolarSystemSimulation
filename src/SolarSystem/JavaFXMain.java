@@ -4,9 +4,9 @@
  */
 package SolarSystem;
 
+import static SolarSystem.Constants.*;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Math.pow;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -22,7 +22,6 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -37,10 +36,7 @@ public class JavaFXMain extends Application {
 
     private PathTransition pathTransition = new PathTransition();
     private PathTransition pathTransition2 = new PathTransition();
-    private PathTransition pathTransitionEllipse;
-    private PathTransition pathTransitionCircle;
     private PathTransition pathTransition3 = new PathTransition();
-    private Algorithms calculator = new Algorithms();
 
     @Override
     public void start(Stage primaryStage) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -64,16 +60,41 @@ public class JavaFXMain extends Application {
         //mediaPlayer.setAutoPlay(true);                      //Automatically begins playing the music. Can turn this off and set them to buttons easily if we'd like.
         //mediaPlayer.setVolume(0.1);                         //Sets volume to a tenth of it's original volume.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Planet earth = new Planet("Earth", 152100000, 147100000, 6000, 5.972 * pow(10, 24), 2, 100);
-        Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
-        Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8, 8);
-        Planet venus = new Planet("Venus", 108.939 * pow(10, 6), 107.477 * pow(10, 6), 6000, 4.8 * pow(10, 24), 20, 12);
+        //Sets volume to a tenth of it's original volume.
+        Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS, EARTHRADIUS, EARTHMASS, EARTHINCLINATION);
+        Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS, MARSMASS, MARSINCLINATION);
+        Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS, JUPITERRADIUS, JUPITERMASS, JUPITERINCLINATION);
+        Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS, VENUSRADIUS, VENUSMASS, VENUSINCLINATION);
+        Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS, MERCURYRADIUS, MERCURYMASS, MERCURYINCLINATION);
+        Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS, SATURNRADIUS, SATURNMASS, SATURNINCLINATION);
+        Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS, URANUSRADIUS, URANUSMASS, URANUSINCLINATION);
+        Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS, NEPTUNERADIUS, NEPTUNEMASS, NEPTUNEINCLINATION);
+        Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS, PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION);
+
+        Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
 
         SolarSystem test = new SolarSystem("New");
+        earth.setStyle(EARTHIMAGE);
+        mars.setStyle(MARSIMAGE);
+        jupiter.setStyle(JUPITERIMAGE);
+        venus.setStyle(VENUSIMAGE);
+        sun.setStyle(SUNIMAGE);
+        mercury.setStyle(MERCURYIMAGE);
+        saturn.setStyle(SATURNIMAGE);
+        uranus.setStyle(URANUSIMAGE);
+        neptune.setStyle(NEPTUNEIMAGE);
+        pluto.setStyle(PLUTOIMAGE);
+
+        test.addPlanet(sun);
         test.addPlanet(mars);
         test.addPlanet(earth);
         test.addPlanet(venus);
         test.addPlanet(jupiter);
+        test.addPlanet(mercury);
+        test.addPlanet(saturn);
+        test.addPlanet(uranus);
+        test.addPlanet(neptune);
+        test.addPlanet(pluto);
 
         primaryStage.show();
 
@@ -84,22 +105,10 @@ public class JavaFXMain extends Application {
                 new Translate(0, 0, -50));
         camera.setFieldOfView(1000);
 
-        Sphere sphere = new Sphere(10); //Create a sphere that has a raidus of 10
-        Sphere sphere2 = new Sphere(10 * .53);
-        Sphere sphere3 = new Sphere(10 * 6);
-        Sphere sun = new Sphere(20);
-
         //Adding material to spheres
-        earth.setMapping("earth.png");
-        mars.setMapping("mars.jpg");
-        jupiter.setMapping("file:jupiter.jpg");
-
         PhongMaterial mat3 = new PhongMaterial();
         Image diffuseMap3 = new Image("file:Sun.jpg");
         mat3.setDiffuseMap(diffuseMap3);
-
-        sun.setMaterial(mat3);
-        sun.setDrawMode(DrawMode.FILL);
 
         //Creating a light source
         PointLight light = new PointLight();
@@ -107,58 +116,16 @@ public class JavaFXMain extends Application {
         light.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2);
         light.setTranslateZ(-100);
 
-        //CENTERING THE SUN
-        sun.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2); // This will give you the center of the created Scene
-
-        double centerX = calculator.calculateCenterX(primaryStage, earth.getEccentricity(), earth.getSemiMajorAxis(), earth.getApoapsisDistanceFromSun());
-        double centerY = calculator.calculateCenterY(primaryStage);
-        double semiMajorAxisCoords = calculator.calculateCoordsConversion(earth.getSemiMajorAxis());
-        double semiMinorAxisCoords = calculator.calculateCoordsConversion(earth.getSemiMinorAxis());
-        double apoapsisDistanceCoords = calculator.apoapsisCoordsConversion(earth.getApoapsisDistanceFromSun());
-        double inclination = earth.getInclination();
-        Path path = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        path.setStroke(Color.TEAL);
-
-        pathTransition = calculator.createPathTransition(earth.getPeriod(), sphere, path);
-
-        centerX = calculator.calculateCenterX(primaryStage, mars.getEccentricity(), mars.getSemiMajorAxis(), earth.getApoapsisDistanceFromSun());
-        centerY = calculator.calculateCenterY(primaryStage);
-        semiMajorAxisCoords = calculator.calculateCoordsConversion(mars.getSemiMajorAxis());
-        semiMinorAxisCoords = calculator.calculateCoordsConversion(mars.getSemiMinorAxis());
-        inclination = mars.getInclination();
-        Path path2 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        pathTransition2 = calculator.createPathTransition(mars.getPeriod(), sphere2, path2);
-        pathTransition2.play();
-
-        centerX = calculator.calculateCenterX(primaryStage, jupiter.getEccentricity(), jupiter.getSemiMajorAxis(), jupiter.getApoapsisDistanceFromSun());
-        centerY = calculator.calculateCenterY(primaryStage);
-        semiMajorAxisCoords = calculator.calculateCoordsConversion(jupiter.getSemiMajorAxis());
-        semiMinorAxisCoords = calculator.calculateCoordsConversion(jupiter.getSemiMinorAxis());
-        inclination = mars.getInclination();
-        Path path3 = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        PathTransition pathTransition3 = calculator.createPathTransition(jupiter.getPeriod(), sphere3, path3);
-        pathTransition3.play();
-
-        root.getChildren().add(camera);
-        root.getChildren().add(sphere);
-        root.getChildren().add(sphere2);
-        root.getChildren().add(sphere3);
         root.getChildren().add(light);
 
-        root.getChildren().add(sun);
-        test.setSystemToRoot(root, primaryStage); // A function that adds the solar system to the root
-
-        //scene.setCamera(camera);
-        path.toBack();
-        path3.toBack();
+        test.setSystemToRoot(root); // A function that adds the solar system to the root
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.DOWN) {
-                    //testBox.getTransforms().add(new Rotate(10, 0, 0, 0, Rotate.Y_AXIS));
-                    //jupiter.getTransforms().add(new Rotate(10, 0, 0, 0, Rotate.Y_AXIS));
+
                     root.setScaleX(root.getScaleX() / 1.2);
                     root.setScaleY(root.getScaleY() / 1.2);
                 }
