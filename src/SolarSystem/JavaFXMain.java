@@ -14,7 +14,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import static javafx.scene.input.KeyCode.ENTER;
+import javafx.scene.input.KeyCode;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -68,6 +68,7 @@ public class JavaFXMain extends Application {
         Planet mars = new Planet("Mars", 249.23 * pow(10, 6), 206.92 * pow(10, 6), 3389.279464, 0.64171 * pow(10, 24), 20, 12);
         Planet jupiter = new Planet("Jupter", 816.62 * pow(10, 6), 740.52 * pow(10, 6), 69911.513, 1898.19 * pow(10, 24), 8, 8);
         Planet venus = new Planet("Venus", 108.939 * pow(10, 6), 107.477 * pow(10, 6), 6000, 4.8 * pow(10, 24), 20, 12);
+
         SolarSystem test = new SolarSystem("New");
         test.addPlanet(mars);
         test.addPlanet(earth);
@@ -81,6 +82,7 @@ public class JavaFXMain extends Application {
                 new Rotate(-20, Rotate.Y_AXIS),
                 new Rotate(90, Rotate.X_AXIS),
                 new Translate(0, 0, -50));
+        camera.setFieldOfView(1000);
 
         Sphere sphere = new Sphere(10); //Create a sphere that has a raidus of 10
         Sphere sphere2 = new Sphere(10 * .53);
@@ -88,30 +90,16 @@ public class JavaFXMain extends Application {
         Sphere sun = new Sphere(20);
 
         //Adding material to spheres
-        PhongMaterial mat = new PhongMaterial();
-        Image diffuseMap = new Image("file:earth.png");
-        mat.setDiffuseMap(diffuseMap);
-
-        PhongMaterial mat2 = new PhongMaterial();
-        Image diffuseMap2 = new Image("file:mars.jpg");
-        mat2.setDiffuseMap(diffuseMap2);
+        earth.setMapping("earth.png");
+        mars.setMapping("mars.jpg");
+        jupiter.setMapping("file:jupiter.jpg");
 
         PhongMaterial mat3 = new PhongMaterial();
         Image diffuseMap3 = new Image("file:Sun.jpg");
         mat3.setDiffuseMap(diffuseMap3);
 
-        PhongMaterial mat4 = new PhongMaterial();
-        Image diffuseMap4 = new Image("file:jupiter.jpg");
-        mat4.setDiffuseMap(diffuseMap4);
-
-        sphere.setMaterial(mat);
-        sphere.setDrawMode(DrawMode.FILL);
-        sphere2.setMaterial(mat2);
-        sphere2.setDrawMode(DrawMode.FILL);
         sun.setMaterial(mat3);
         sun.setDrawMode(DrawMode.FILL);
-        sphere3.setMaterial(mat4);
-        sphere3.setDrawMode(DrawMode.FILL);
 
         //Creating a light source
         PointLight light = new PointLight();
@@ -168,13 +156,19 @@ public class JavaFXMain extends Application {
 
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == ENTER) {
+                if (event.getCode() == KeyCode.DOWN) {
                     //testBox.getTransforms().add(new Rotate(10, 0, 0, 0, Rotate.Y_AXIS));
                     //jupiter.getTransforms().add(new Rotate(10, 0, 0, 0, Rotate.Y_AXIS));
-                    camera.setFieldOfView(camera.getFieldOfView() + 10);
+                    root.setScaleX(root.getScaleX() / 1.2);
+                    root.setScaleY(root.getScaleY() / 1.2);
                 }
                 else if (event.getCode() == UP) {
-
+                    root.setScaleX(root.getScaleX() / .8);
+                    root.setScaleY(root.getScaleY() / .8);
+                }
+                else if (event.getCode() == KeyCode.LEFT) {
+                    root.setTranslateX(-10);
+                    root.translateXProperty();
                 }
             }
         });

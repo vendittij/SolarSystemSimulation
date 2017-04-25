@@ -8,6 +8,9 @@ package SolarSystem;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javafx.animation.PathTransition;
+import javafx.scene.image.Image;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
@@ -217,5 +220,14 @@ public class Planet {
         double semiMinorAxisCoords = calculator.calculateCoordsConversion(this.semiMinorAxis);
         this.path = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
         this.pathTransition = calculator.createPathTransition(this.period, this.sphere, this.path);
+    }
+
+    public void setMapping(String mat) {
+        PhongMaterial material = new PhongMaterial();
+        Image diffuseMap = new Image("file:" + mat);
+        material.setDiffuseMap(diffuseMap);
+
+        sphere.setMaterial(material);
+        sphere.setDrawMode(DrawMode.FILL);
     }
 }
