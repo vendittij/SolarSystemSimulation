@@ -10,8 +10,8 @@ package SolarSystem;
  * @author Gabe
  */
 public class Moon extends Planet {
-    
-    public Moon(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, double periapsisYCoord) {
-        super(name,apoapsisDistance,periapsisDistance,planetRadius,mass,inclination, periapsisYCoord);
+
+    public Moon(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination) {
+        super(name, apoapsisDistance, periapsisDistance, planetRadius, mass, inclination);
     }
 }

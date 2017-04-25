@@ -7,7 +7,7 @@ package SolarSystem;
 
 import java.util.ArrayList;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+import javafx.scene.shape.Sphere;
 
 /**
  *
@@ -43,10 +43,19 @@ public class SolarSystem {
         this.name = newName;
     }
 
-    public BorderPane setSystemToRoot(BorderPane root, Stage primaryStage) {
+    public BorderPane setSystemToRoot(BorderPane root) {
 
         for (int i = 0; i < planetsInSystem(); i++) {
-            solarSystem.get(i).setPath(primaryStage);
+            if (solarSystem.get(i) instanceof Sun) {
+                Sphere sun = solarSystem.get(i).getPlanet();
+                double centerX = root.getWidth() / 2 - 20;
+                double centerY = root.getHeight() / 2 - 20;
+                sun.relocate(centerX, centerY);
+                root.getChildren().add(sun);
+                continue;
+
+            }
+            solarSystem.get(i).setPath(root);
             root.getChildren().add(solarSystem.get(i).getPlanet());
             root.getChildren().add(solarSystem.get(i).getPath());
         }

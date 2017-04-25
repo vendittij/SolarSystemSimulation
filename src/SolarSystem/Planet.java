@@ -5,12 +5,16 @@
  */
 package SolarSystem;
 
-import java.awt.geom.Point2D;
+import static SolarSystem.Algorithms.*;
+import java.io.File;
 import java.util.ArrayList;
 import javafx.animation.PathTransition;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Sphere;
-import javafx.stage.Stage;
 
 /**
  *
@@ -26,13 +30,11 @@ public class Planet {
     private double eccentricity;
     private double planetRadius;
     private double mass;
-    private double currentDistanceFromSun;
     private String name;
     private double apoapsisDistanceFromSun;
     private double periapsisDistanceFromSun;
     private double semiMajorAxis;
     private double avgVelocty;
-    private Algorithms calculator = new Algorithms();
     private ArrayList<Moon> planetMoons = new ArrayList<>();
     private Path path;
     private PathTransition pathTransition;
@@ -49,7 +51,7 @@ public class Planet {
      * @param inclination
      * @param periapsisYCoord
      */
-    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, double periapsisYCoord) {
+    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination) {
 
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
@@ -57,18 +59,18 @@ public class Planet {
         this.planetRadius = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
-        this.sphere = calculator.createSphere(this.planetRadius);
+        this.sphere = createSphere(this.planetRadius);
 
-        this.apoapsisDistanceFromSun = calculator.convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
-        this.periapsisDistanceFromSun = calculator.convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
+        this.apoapsisDistanceFromSun = convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
+        this.periapsisDistanceFromSun = convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
 
-        this.semiMajorAxis = calculator.calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
-        this.eccentricity = calculator.calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
-        this.period = calculator.calculatePeriod(this.semiMajorAxis);
+        this.semiMajorAxis = calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
+        this.eccentricity = calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
+        this.period = calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
-        this.avgVelocty = calculator.calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+        this.avgVelocty = calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
 
-        this.semiMinorAxis = calculator.calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
+        this.semiMinorAxis = calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
 
     }
 
@@ -145,14 +147,6 @@ public class Planet {
         this.mass = mass;
     }
 
-    public double getCurrentDistanceFromSun(Point2D.Double point) {
-        return calculator.calculateCurrentDistanceFromSun(point);
-    }
-
-    public void setCurrentDistanceFromSun(double currentDistanceFromSun) {
-        this.currentDistanceFromSun = currentDistanceFromSun;
-    }
-
     public String getName() {
         return name;
     }
@@ -209,13 +203,32 @@ public class Planet {
         return this.pathTransition;
     }
 
-    public void setPath(Stage primaryStage) {
+    public void setPath(BorderPane root) {
 
-        double centerX = calculator.calculateCenterX(primaryStage, this.eccentricity, this.semiMajorAxis, this.apoapsisDistanceFromSun);
-        double centerY = calculator.calculateCenterY(primaryStage);
-        double semiMajorAxisCoords = calculator.calculateCoordsConversion(this.semiMajorAxis);
-        double semiMinorAxisCoords = calculator.calculateCoordsConversion(this.semiMinorAxis);
-        this.path = calculator.createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        this.pathTransition = calculator.createPathTransition(this.period, this.sphere, this.path);
+        double centerX = calculateCenterX(root, this.eccentricity, this.semiMajorAxis, this.apoapsisDistanceFromSun);
+        double centerY = calculateCenterY(root);
+        double semiMajorAxisCoords = calculateCoordsConversion(this.semiMajorAxis);
+        double semiMinorAxisCoords = calculateCoordsConversion(this.semiMinorAxis);
+        this.path = createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
+        this.pathTransition = createPathTransition(this.period, this.sphere, this.path);
+    }
+
+    public void setStyle(String fileName) {
+        String folder = "src/DiffuseMaps/";
+        folder = folder.concat(fileName);
+        System.out.println(folder);
+
+        File file = new File(folder);
+        System.out.println(file.exists());
+        String absPath = file.getAbsolutePath();
+
+        String start = "file:";
+        start = start.concat(absPath);
+
+        PhongMaterial mat = new PhongMaterial();
+        Image diffuseMap = new Image(start);
+        mat.setDiffuseMap(diffuseMap);
+        this.sphere.setMaterial(mat);
+        this.sphere.setDrawMode(DrawMode.FILL);
     }
 }
