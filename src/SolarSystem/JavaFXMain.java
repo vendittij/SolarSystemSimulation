@@ -18,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
@@ -127,10 +128,12 @@ public class JavaFXMain extends Application {
 
                     root.setScaleX(root.getScaleX() / 1.2);
                     root.setScaleY(root.getScaleY() / 1.2);
-                } else if (event.getCode() == UP) {
+                }
+                else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
-                } else if (event.getCode() == KeyCode.LEFT) {
+                }
+                else if (event.getCode() == KeyCode.LEFT) {
                     root.setTranslateX(-10);
                     root.translateXProperty();
                 }
