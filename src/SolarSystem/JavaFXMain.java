@@ -50,8 +50,8 @@ public class JavaFXMain extends Application {
         //Music
         File file = new File("DayAndNight.mp3");
         String source = file.toURI().toString();
-        AudioClip music = new AudioClip(source);
-        music.play();
+        //AudioClip music = new AudioClip(source);
+        //music.play();
         // first directory I wanted to start in. The way I got it here made it possible to play it on my computer,
         // so it's possible to get it working if we follow similar on the linux computers when we put it there.
 

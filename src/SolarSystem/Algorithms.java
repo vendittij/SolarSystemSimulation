@@ -304,6 +304,12 @@ public final class Algorithms {
                 .build();
         path.setStroke(Color.WHITE);
         path.toBack();
+
+        if (radiusX > 305) {
+            path.setStrokeWidth(path.getStrokeWidth() * 4);
+        } else if (radiusX > 1000) {
+            path.setStrokeWidth(path.getStrokeWidth() * 10);
+        }
         return path;
     }
 
