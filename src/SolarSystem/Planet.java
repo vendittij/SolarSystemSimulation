@@ -231,4 +231,5 @@ public class Planet {
         this.sphere.setMaterial(mat);
         this.sphere.setDrawMode(DrawMode.FILL);
     }
+
 }
