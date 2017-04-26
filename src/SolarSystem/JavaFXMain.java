@@ -134,7 +134,7 @@ public class JavaFXMain extends Application {
                     root.setScaleY(root.getScaleY() / .8);
                 }
                 else if (event.getCode() == KeyCode.LEFT) {
-                    root.setTranslateX(-10);
+                    root.setTranslateX(root.getTranslateX() - 10);
                     root.translateXProperty();
                 }
             }
