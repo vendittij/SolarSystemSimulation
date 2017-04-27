@@ -34,7 +34,7 @@ public class Planet {
     private double apoapsisDistanceFromSun;
     private double periapsisDistanceFromSun;
     private double semiMajorAxis;
-    private double avgVelocty;
+    private double avgVelocity;
     private ArrayList<Moon> planetMoons = new ArrayList<>();
     private Path path;
     private PathTransition pathTransition;
@@ -70,7 +70,7 @@ public class Planet {
         this.eccentricity = calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
         this.period = calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
-        this.avgVelocty = calculateAverageVelocty(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+        this.avgVelocity = calculateAverageVelocity(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
 
         this.semiMinorAxis = calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
 
@@ -85,12 +85,12 @@ public class Planet {
 
     }
 
-    public double getAvgVelocty() {
-        return avgVelocty;
+    public double getAvgVelocity() {
+        return avgVelocity;
     }
 
-    public void setAvgVelocty(double avgVelocty) {
-        this.avgVelocty = avgVelocty;
+    public void setAvgVelocity(double avgVelocty) {
+        this.avgVelocity = avgVelocty;
     }
 
     public double getPeriod() {
@@ -234,4 +234,9 @@ public class Planet {
         this.sphere.setDrawMode(DrawMode.FILL);
     }
 
+    @Override
+    public String toString() {
+        String output = String.format("Planet: %s\nMass: %f\nAverage distance from the sun: %f\nInclination: %f\nEccentricity: %f\nRadius of planet: %f\nApoapsis Distance from the sun : %f\nPeriapsis distance from the sun: %f\nAverage velocity : %f\n", this.name, this.mass, this.semiMajorAxis, this.semiMinorAxis, this.inclination, this.eccentricity, this.planetRadius, this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun, this.avgVelocity);
+        return output;
+    }
 }

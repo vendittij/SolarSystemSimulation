@@ -161,7 +161,7 @@ public final class Algorithms {
      *
      * @return double : The average velocity of the planet
      */
-    public static double calculateAverageVelocty(double apoapsisDistanceFromSun, double periapsisDistanceFromSun, double mass, double semiMajorAxis, double period) {
+    public static double calculateAverageVelocity(double apoapsisDistanceFromSun, double periapsisDistanceFromSun, double mass, double semiMajorAxis, double period) {
         double averageVelocity;
 
         double apoapsisVelocity = calculateVelocity(apoapsisDistanceFromSun, semiMajorAxis, mass, period); //Only need to find velocity at apopasis

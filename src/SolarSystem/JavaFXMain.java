@@ -8,7 +8,6 @@ import static SolarSystem.Constants.*;
 import java.awt.Button;
 import java.io.File;
 import java.io.IOException;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -37,9 +36,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class JavaFXMain extends Application {
 
-    private PathTransition pathTransition = new PathTransition();
-    private PathTransition pathTransition2 = new PathTransition();
-    private PathTransition pathTransition3 = new PathTransition();
+    private int translationsX = 0;
+    private int translationsY = 0;
 
     @Override
     public void start(Stage primaryStage) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -113,6 +111,11 @@ public class JavaFXMain extends Application {
         test.addPlanet(uranus);
         test.addPlanet(neptune);
         test.addPlanet(pluto);
+
+        for (int i = 0; i < test.planetsInSystem(); i++) {
+            System.out.println(test.planetSelector(i));
+        }
+
         primaryStage.show();
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.getTransforms().addAll(
@@ -144,12 +147,29 @@ public class JavaFXMain extends Application {
                 } else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
-                } else if (event.getCode() == KeyCode.LEFT) {
+                } else if (event.getCode() == KeyCode.A) {
                     root.setTranslateX(root.getTranslateX() - 10);
                     root.translateXProperty();
-                } else if (event.getCode() == KeyCode.RIGHT) {
+                    translationsX += 10;
+                } else if (event.getCode() == KeyCode.D) {
                     root.setTranslateX(root.getTranslateX() + 10);
                     root.translateXProperty();
+                    translationsX -= 10;
+                } else if (event.getCode() == KeyCode.W) {
+                    root.setTranslateY(root.getTranslateY() - 10);
+                    root.translateYProperty();
+                    translationsY += 10;
+                } else if (event.getCode() == KeyCode.S) {
+                    root.setTranslateY(root.getTranslateY() + 10);
+                    root.translateYProperty();
+                    translationsY -= 10;
+                } else if (event.getCode() == KeyCode.SPACE) {
+                    root.setTranslateY(root.getTranslateY() + translationsY);
+                    root.setTranslateX(root.getTranslateX() + translationsX);
+                    root.translateXProperty();
+                    root.translateYProperty();
+                    translationsY = 0;
+                    translationsX = 0;
                 }
             }
         });
