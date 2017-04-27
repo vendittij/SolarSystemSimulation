@@ -5,14 +5,18 @@
 package SolarSystem;
 
 import static SolarSystem.Constants.*;
+import java.awt.Button;
 import java.io.File;
 import java.io.IOException;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import static javafx.scene.input.KeyCode.UP;
@@ -39,12 +43,32 @@ public class JavaFXMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+        BorderPane pane = new BorderPane();
         BorderPane root = new BorderPane();
+        pane.setCenter(root);
+
         Image stars = new Image("http://i.imgur.com/PgYKaSd.jpg"); //URL for the background image
         ImagePattern pattern = new ImagePattern(stars); //Sets up an image pattern that is based off of the stars.
-        Scene scene = new Scene(root, 1500, 1000);
-        scene.setFill(pattern); //Sets the background of the scene to be the following.
+        Scene scene = new Scene(pane, 1500, 1000);
+
+        pane.setStyle(
+                "-fx-background-image: url("
+                + "'http://i.imgur.com/PgYKaSd.jpg'"
+                + "); "
+                + "-fx-background-size: stretch;"
+        );
+
         primaryStage.setScene(scene);
+
+        //Info pane
+        SplitPane info = new SplitPane();
+        info.setOrientation(Orientation.HORIZONTAL);
+        info.setDividerPosition(1, .5);
+        info.setMinHeight(200);
+        pane.setBottom(info);
+        root.setAlignment(info, Pos.BOTTOM_LEFT);
+        info.setStyle("-fx-background-color: rgba(192, 192, 192, .4);");
+
         //Music
         File file = new File("DayAndNight.mp3");
         String source = file.toURI().toString();
@@ -106,6 +130,8 @@ public class JavaFXMain extends Application {
         light.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2);
         light.setTranslateZ(-100);
         root.getChildren().add(light);
+        Button button = new Button("Display Information");
+
         test.setSystemToRoot(root); // A function that adds the solar system to the root
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -113,11 +139,16 @@ public class JavaFXMain extends Application {
                 if (event.getCode() == KeyCode.DOWN) {
                     root.setScaleX(root.getScaleX() / 1.2);
                     root.setScaleY(root.getScaleY() / 1.2);
+                    //background.setFitWidth(root.getScaleX());
+                    //background.fitHeightProperty().bind(primaryStage.heightProperty());
                 } else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
                 } else if (event.getCode() == KeyCode.LEFT) {
-                    root.setTranslateX(-10);
+                    root.setTranslateX(root.getTranslateX() - 10);
+                    root.translateXProperty();
+                } else if (event.getCode() == KeyCode.RIGHT) {
+                    root.setTranslateX(root.getTranslateX() + 10);
                     root.translateXProperty();
                 }
             }
