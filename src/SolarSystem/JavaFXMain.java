@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
@@ -46,7 +45,6 @@ public class JavaFXMain extends Application {
         Scene scene = new Scene(root, 1500, 1000);
         scene.setFill(pattern); //Sets the background of the scene to be the following.
         primaryStage.setScene(scene);
-
         //Music
         File file = new File("DayAndNight.mp3");
         String source = file.toURI().toString();
@@ -54,7 +52,6 @@ public class JavaFXMain extends Application {
         //music.play();
         // first directory I wanted to start in. The way I got it here made it possible to play it on my computer,
         // so it's possible to get it working if we follow similar on the linux computers when we put it there.
-
         // Media sound = new Media(musicFile);     //Create the media by directly putting the file name into it. Nothing else is needed.
         //MediaPlayer mediaPlayer = new MediaPlayer(sound);  //Create the media player by using the media object just created
         //mediaPlayer.setAutoPlay(true);                      //Automatically begins playing the music. Can turn this off and set them to buttons easily if we'd like.
@@ -70,9 +67,7 @@ public class JavaFXMain extends Application {
         Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS, URANUSRADIUS, URANUSMASS, URANUSINCLINATION);
         Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS, NEPTUNERADIUS, NEPTUNEMASS, NEPTUNEINCLINATION);
         Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS, PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION);
-
         Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
-
         SolarSystem test = new SolarSystem("New");
         earth.setStyle(EARTHIMAGE);
         mars.setStyle(MARSIMAGE);
@@ -84,7 +79,6 @@ public class JavaFXMain extends Application {
         uranus.setStyle(URANUSIMAGE);
         neptune.setStyle(NEPTUNEIMAGE);
         pluto.setStyle(PLUTOIMAGE);
-
         test.addPlanet(sun);
         test.addPlanet(mars);
         test.addPlanet(earth);
@@ -95,45 +89,34 @@ public class JavaFXMain extends Application {
         test.addPlanet(uranus);
         test.addPlanet(neptune);
         test.addPlanet(pluto);
-
         primaryStage.show();
-
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.getTransforms().addAll(
                 new Rotate(-20, Rotate.Y_AXIS),
                 new Rotate(90, Rotate.X_AXIS),
                 new Translate(0, 0, -50));
         camera.setFieldOfView(1000);
-
         //Adding material to spheres
         PhongMaterial mat3 = new PhongMaterial();
         Image diffuseMap3 = new Image("file:Sun.jpg");
         mat3.setDiffuseMap(diffuseMap3);
-
         //Creating a light source
         PointLight light = new PointLight();
         light.setColor(Color.WHITE);
         light.relocate(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2);
         light.setTranslateZ(-100);
-
         root.getChildren().add(light);
-
         test.setSystemToRoot(root); // A function that adds the solar system to the root
-
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.DOWN) {
-
                     root.setScaleX(root.getScaleX() / 1.2);
                     root.setScaleY(root.getScaleY() / 1.2);
-                }
-                else if (event.getCode() == UP) {
+                } else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
-                }
-                else if (event.getCode() == KeyCode.LEFT) {
+                } else if (event.getCode() == KeyCode.LEFT) {
                     root.setTranslateX(-10);
                     root.translateXProperty();
                 }
@@ -141,6 +124,7 @@ public class JavaFXMain extends Application {
         });
     }
 
+    //for (int i = 0; )
     public static void main(String[] args) {
         launch(args);
     }
