@@ -39,6 +39,7 @@ public class Planet {
     private Path path;
     private PathTransition pathTransition;
     private Sphere sphere;
+    private int orbitRate;
 
     /**
      * The constructor for all Planet objects
@@ -51,7 +52,7 @@ public class Planet {
      * @param inclination
      * @param periapsisYCoord
      */
-    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination) {
+    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, int rate) {
 
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
@@ -59,6 +60,7 @@ public class Planet {
         this.planetRadius = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
+        this.orbitRate = rate;
         this.sphere = createSphere(this.planetRadius);
 
         this.apoapsisDistanceFromSun = convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
@@ -210,7 +212,7 @@ public class Planet {
         double semiMajorAxisCoords = calculateCoordsConversion(this.semiMajorAxis);
         double semiMinorAxisCoords = calculateCoordsConversion(this.semiMinorAxis);
         this.path = createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        this.pathTransition = createPathTransition(this.period, this.sphere, this.path);
+        this.pathTransition = createPathTransition(this.period, this.sphere, this.path, this.orbitRate);
     }
 
     public void setStyle(String fileName) {

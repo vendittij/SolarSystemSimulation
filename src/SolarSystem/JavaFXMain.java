@@ -58,15 +58,15 @@ public class JavaFXMain extends Application {
         //mediaPlayer.setVolume(0.1);                         //Sets volume to a tenth of it's original volume.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Sets volume to a tenth of it's original volume.
-        Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS, EARTHRADIUS, EARTHMASS, EARTHINCLINATION);
-        Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS, MARSMASS, MARSINCLINATION);
-        Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS, JUPITERRADIUS, JUPITERMASS, JUPITERINCLINATION);
-        Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS, VENUSRADIUS, VENUSMASS, VENUSINCLINATION);
-        Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS, MERCURYRADIUS, MERCURYMASS, MERCURYINCLINATION);
-        Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS, SATURNRADIUS, SATURNMASS, SATURNINCLINATION);
-        Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS, URANUSRADIUS, URANUSMASS, URANUSINCLINATION);
-        Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS, NEPTUNERADIUS, NEPTUNEMASS, NEPTUNEINCLINATION);
-        Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS, PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION);
+        Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS, EARTHRADIUS, EARTHMASS, EARTHINCLINATION, EARTHRATE);
+        Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS, MARSMASS, MARSINCLINATION, MARSRATE);
+        Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS, JUPITERRADIUS, JUPITERMASS, JUPITERINCLINATION, JUPITERRATE);
+        Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS, VENUSRADIUS, VENUSMASS, VENUSINCLINATION, VENUSRATE);
+        Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS, MERCURYRADIUS, MERCURYMASS, MERCURYINCLINATION, MERCURYRATE);
+        Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS, SATURNRADIUS, SATURNMASS, SATURNINCLINATION, SATURNRATE);
+        Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS, URANUSRADIUS, URANUSMASS, URANUSINCLINATION, URANUSRATE);
+        Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS, NEPTUNERADIUS, NEPTUNEMASS, NEPTUNEINCLINATION, NEPTUNERATE);
+        Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS, PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION, PLUTORATE);
         Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
         SolarSystem test = new SolarSystem("New");
         earth.setStyle(EARTHIMAGE);
@@ -124,7 +124,6 @@ public class JavaFXMain extends Application {
         });
     }
 
-    //for (int i = 0; )
     public static void main(String[] args) {
         launch(args);
     }
