@@ -211,10 +211,11 @@ public class Planet {
         double semiMinorAxisCoords = calculateCoordsConversion(this.semiMinorAxis);
         this.path = createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
         this.pathTransition = createPathTransition(this.period, this.sphere, this.path);
+
     }
 
     public void setStyle(String fileName) {
-        String folder = "src/DiffuseMaps/";
+        String folder = "SSS/src/DiffuseMaps/";
         folder = folder.concat(fileName);
         System.out.println(folder);
 

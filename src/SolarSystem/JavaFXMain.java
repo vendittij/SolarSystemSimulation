@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -25,6 +26,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -68,6 +72,12 @@ public class JavaFXMain extends Application {
         pane.setBottom(info);
         root.setAlignment(info, Pos.BOTTOM_LEFT);
         info.setStyle("-fx-background-color: rgba(192, 192, 192, .4);");
+        info.getItems().add(new Label("IT WORKS BITCHES"));
+        Text textOut = new Text();
+        textOut.setFont(Font.font(null, FontWeight.BOLD, 30));
+        textOut.setText("ZACH EATS ASS");
+        textOut.setFill(Color.YELLOW);
+        info.getItems().add(textOut);
 
         //Music
         File file = new File("DayAndNight.mp3");
@@ -165,6 +175,9 @@ public class JavaFXMain extends Application {
                 else if (event.getCode() == KeyCode.RIGHT) {
                     root.setTranslateX(root.getTranslateX() + 10);
                     root.translateXProperty();
+                }
+                else if (event.getCode() == KeyCode.P) {
+                    //Find pluto
                 }
             }
         });
