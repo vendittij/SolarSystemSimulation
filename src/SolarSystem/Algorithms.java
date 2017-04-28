@@ -237,7 +237,8 @@ public final class Algorithms {
     }
 
     public static PathTransition createPathTransition(double period,
-                                                      Sphere planet, Path path) {
+                                                      Sphere planet, Path path,
+                                                      int rate) {
 
         PathTransition transition = new PathTransition();
         int daysInYear = 365;
@@ -248,6 +249,7 @@ public final class Algorithms {
         transition.setDuration(Duration.millis(duration));
         transition.setNode(planet);
         transition.setPath(path);
+        transition.setRate(rate);
         transition.setOrientation(OrientationType.NONE);
         transition.setInterpolator(Interpolator.LINEAR);
         transition.setCycleCount(Timeline.INDEFINITE);
