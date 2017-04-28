@@ -8,7 +8,8 @@ package SolarSystem;
 import static java.lang.Math.pow;
 
 /**
- * Constants for all relevant planet information needed by the constructor.
+ * Constants for all relevant planet information needed by the Planet
+ * constructor.
  *
  * @author zmb004
  */

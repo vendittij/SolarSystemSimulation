@@ -73,7 +73,8 @@ public final class Algorithms {
      *
      * @return double : The semi-major axis of the elliptical orbit
      */
-    public static double calculatSemiMajorAxis(double apoapsisDistance, double periapsisDistance) {
+    public static double calculatSemiMajorAxis(double apoapsisDistance,
+                                               double periapsisDistance) {
         return (apoapsisDistance + periapsisDistance) / 2; //Very similar to how you would find radius of a circle
     }
 
@@ -86,7 +87,8 @@ public final class Algorithms {
      *
      * @return double : The eccentricity of the orbit
      */
-    public static double calculatEccentricity(double apoapsisDistance, double semiMajorAxis) {
+    public static double calculatEccentricity(double apoapsisDistance,
+                                              double semiMajorAxis) {
         double eccentricity;
 
         eccentricity = (apoapsisDistance / semiMajorAxis) - 1; //To calculate eccentricity, must do this.
@@ -119,11 +121,13 @@ public final class Algorithms {
      *
      * @return Point2D.Double : Gives the point of the periapsis for the planet
      */
-    public static Point2D.Double calculatePeriapsis(double periapsisDistanceFromSun, double YCoord) {
+    public static Point2D.Double calculatePeriapsis(
+            double periapsisDistanceFromSun, double YCoord) {
         Point2D.Double periapsis;
 
         //May need to revise this!!!!!
-        periapsis = new Point2D.Double(350 + periapsisDistanceFromSun * coordinateScale, 350 - YCoord);
+        periapsis = new Point2D.Double(
+                350 + periapsisDistanceFromSun * coordinateScale, 350 - YCoord);
 
         return periapsis;
     }
@@ -138,11 +142,13 @@ public final class Algorithms {
      *
      * @return Point2D.Double : Gives the point of the apoapsis
      */
-    public static Point2D.Double calculateApoapsis(double apoapsisDistanceFromSun, double YCoord) {
+    public static Point2D.Double calculateApoapsis(
+            double apoapsisDistanceFromSun, double YCoord) {
         Point2D.Double apoapsis;
 
         //May need to revise this!!!!!
-        apoapsis = new Point2D.Double(400 - apoapsisDistanceFromSun * coordinateScale, 350 + YCoord);
+        apoapsis = new Point2D.Double(
+                400 - apoapsisDistanceFromSun * coordinateScale, 350 + YCoord);
 
         return apoapsis;
     }
@@ -161,11 +167,17 @@ public final class Algorithms {
      *
      * @return double : The average velocity of the planet
      */
-    public static double calculateAverageVelocty(double apoapsisDistanceFromSun, double periapsisDistanceFromSun, double mass, double semiMajorAxis, double period) {
+    public static double calculateAverageVelocty(double apoapsisDistanceFromSun,
+                                                 double periapsisDistanceFromSun,
+                                                 double mass,
+                                                 double semiMajorAxis,
+                                                 double period) {
         double averageVelocity;
 
-        double apoapsisVelocity = calculateVelocity(apoapsisDistanceFromSun, semiMajorAxis, mass, period); //Only need to find velocity at apopasis
-        double periapsisVelocity = calculateVelocity(periapsisDistanceFromSun, semiMajorAxis, mass, period); //and the velocity at periapsis to find average velocity
+        double apoapsisVelocity = calculateVelocity(apoapsisDistanceFromSun,
+                                                    semiMajorAxis, mass, period); //Only need to find velocity at apopasis
+        double periapsisVelocity = calculateVelocity(periapsisDistanceFromSun,
+                                                     semiMajorAxis, mass, period); //and the velocity at periapsis to find average velocity
 
         averageVelocity = (apoapsisVelocity + periapsisVelocity) / 2; //Similar to how you find any average
 
@@ -184,7 +196,9 @@ public final class Algorithms {
      *
      * @return double : The velocity of the planet based off current position
      */
-    public static double calculateVelocity(double radiusFromSun, double semiMajorAxis, double mass, double period) {
+    public static double calculateVelocity(double radiusFromSun,
+                                           double semiMajorAxis, double mass,
+                                           double period) {
         double velocity;
         double gravitationalParameter;
         double difference;
@@ -192,7 +206,8 @@ public final class Algorithms {
         radiusFromSun = radiusFromSun * AUToKM;
         semiMajorAxis = semiMajorAxis * AUToKM;
 
-        gravitationalParameter = 4 * pow(PI, 2) * pow(semiMajorAxis, 3) / pow(period * 365 * 24 * 60 * 60, 2);
+        gravitationalParameter = 4 * pow(PI, 2) * pow(semiMajorAxis, 3) / pow(
+                period * 365 * 24 * 60 * 60, 2);
 
         difference = (2 / radiusFromSun) - (1 / semiMajorAxis);
 
@@ -212,7 +227,8 @@ public final class Algorithms {
      * @return double : The semi-minor axis a.k.a the Y distance for the
      * ellipse.
      */
-    public static double calculateSemiMinorAxis(double semiMajorAxis, double eccentricity) {
+    public static double calculateSemiMinorAxis(double semiMajorAxis,
+                                                double eccentricity) {
         double semiMinorAxis;
 
         semiMinorAxis = semiMajorAxis * sqrt(1 - pow(eccentricity, 2));
@@ -220,7 +236,8 @@ public final class Algorithms {
         return semiMinorAxis;
     }
 
-    public static PathTransition createPathTransition(double period, Sphere planet, Path path) {
+    public static PathTransition createPathTransition(double period,
+                                                      Sphere planet, Path path) {
 
         PathTransition transition = new PathTransition();
         int daysInYear = 365;
@@ -240,7 +257,9 @@ public final class Algorithms {
         return transition;
     }
 
-    public static double calculateCenterX(BorderPane root, double eccentricity, double semiMajorAxis, double apoapsisDistance) {
+    public static double calculateCenterX(BorderPane root, double eccentricity,
+                                          double semiMajorAxis,
+                                          double apoapsisDistance) {
         double x;
 
         if (semiMajorAxis < 0.5) {
@@ -249,7 +268,8 @@ public final class Algorithms {
             return x;
         }
 
-        x = root.getWidth() / 2 + eccentricity * coordinateScale + semiMajorAxis * coordinateScale + apoapsisCoordsConversion(apoapsisDistance) + 10;
+        x = root.getWidth() / 2 + eccentricity * coordinateScale + semiMajorAxis * coordinateScale + apoapsisCoordsConversion(
+                apoapsisDistance) + 10;
 
         return x;
     }
@@ -269,7 +289,8 @@ public final class Algorithms {
 
         if (radius >= radiusThreshold) {
             sphereConversionRate = 15000;
-        } else {
+        }
+        else {
             sphereConversionRate = 500;
         }
 
@@ -286,7 +307,9 @@ public final class Algorithms {
      *
      **************************************************************************************
      */
-    public static Path createEllipsePath(double centerX, double centerY, double radiusX, double radiusY, double rotate) {
+    public static Path createEllipsePath(double centerX, double centerY,
+                                         double radiusX, double radiusY,
+                                         double rotate) {
         ArcTo arcTo = new ArcTo();
         arcTo.setX(centerX - radiusX + 1); // to simulate a full 360 degree celcius circle.
         arcTo.setY(centerY - radiusY);
@@ -307,9 +330,11 @@ public final class Algorithms {
 
         if (radiusX > 305) {
             path.setStrokeWidth(path.getStrokeWidth() * 4);
-        } else if (radiusX > 1000) {
+        }
+        else if (radiusX > 1000) {
             path.setStrokeWidth(path.getStrokeWidth() * 10);
         }
+
         return path;
     }
 

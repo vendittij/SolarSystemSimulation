@@ -8,12 +8,10 @@ import static SolarSystem.Constants.*;
 import java.awt.Button;
 import java.io.File;
 import java.io.IOException;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
@@ -25,8 +23,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -36,10 +32,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Gabe
  */
 public class JavaFXMain extends Application {
-
-    private PathTransition pathTransition = new PathTransition();
-    private PathTransition pathTransition2 = new PathTransition();
-    private PathTransition pathTransition3 = new PathTransition();
 
     @Override
     public void start(Stage primaryStage) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -59,6 +51,7 @@ public class JavaFXMain extends Application {
         );
 
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Solar System Simulator");
 
         //Info pane
         SplitPane info = new SplitPane();
@@ -83,19 +76,32 @@ public class JavaFXMain extends Application {
         //mediaPlayer.setVolume(0.1);                         //Sets volume to a tenth of it's original volume.
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Sets volume to a tenth of it's original volume.
-        Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS, EARTHRADIUS, EARTHMASS, EARTHINCLINATION);
-        Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS, MARSMASS, MARSINCLINATION);
-        Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS, JUPITERRADIUS, JUPITERMASS, JUPITERINCLINATION);
-        Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS, VENUSRADIUS, VENUSMASS, VENUSINCLINATION);
-        Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS, MERCURYRADIUS, MERCURYMASS, MERCURYINCLINATION);
-        Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS, SATURNRADIUS, SATURNMASS, SATURNINCLINATION);
-        Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS, URANUSRADIUS, URANUSMASS, URANUSINCLINATION);
-        Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS, NEPTUNERADIUS, NEPTUNEMASS, NEPTUNEINCLINATION);
-        Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS, PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION);
+        Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS,
+                                  EARTHRADIUS, EARTHMASS, EARTHINCLINATION);
+        Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS,
+                                 MARSMASS, MARSINCLINATION);
+        Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS,
+                                    JUPITERRADIUS, JUPITERMASS,
+                                    JUPITERINCLINATION);
+        Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS,
+                                  VENUSRADIUS, VENUSMASS, VENUSINCLINATION);
+        Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS,
+                                    MERCURYRADIUS, MERCURYMASS,
+                                    MERCURYINCLINATION);
+        Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS,
+                                   SATURNRADIUS, SATURNMASS, SATURNINCLINATION);
+        Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS,
+                                   URANUSRADIUS, URANUSMASS, URANUSINCLINATION);
+        Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS,
+                                    NEPTUNERADIUS, NEPTUNEMASS,
+                                    NEPTUNEINCLINATION);
+        Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS,
+                                  PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION);
 
         Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
 
         SolarSystem test = new SolarSystem("New");
+        // Wrap each planet with its respective image
         earth.setStyle(EARTHIMAGE);
         mars.setStyle(MARSIMAGE);
         jupiter.setStyle(JUPITERIMAGE);
@@ -107,6 +113,7 @@ public class JavaFXMain extends Application {
         neptune.setStyle(NEPTUNEIMAGE);
         pluto.setStyle(PLUTOIMAGE);
 
+        // Adding all planets to our SolarSystem
         test.addPlanet(sun);
         test.addPlanet(mars);
         test.addPlanet(earth);
@@ -119,13 +126,6 @@ public class JavaFXMain extends Application {
         test.addPlanet(pluto);
 
         primaryStage.show();
-
-        PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.getTransforms().addAll(
-                new Rotate(-20, Rotate.Y_AXIS),
-                new Rotate(90, Rotate.X_AXIS),
-                new Translate(0, 0, -50));
-        camera.setFieldOfView(1000);
 
         //Adding material to spheres
         PhongMaterial mat3 = new PhongMaterial();
@@ -144,7 +144,7 @@ public class JavaFXMain extends Application {
         test.setSystemToRoot(root); // A function that adds the solar system to the root
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
+            // Here we write the user control handlers. These keys allow the user to navigate our Solar System using pan/zoom features.
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.DOWN) {
@@ -158,13 +158,21 @@ public class JavaFXMain extends Application {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
                 }
-                else if (event.getCode() == KeyCode.LEFT) {
-                    root.setTranslateX(root.getTranslateX() - 10);
+                else if (event.getCode() == KeyCode.A) {
+                    root.setTranslateX(root.getTranslateX() + 30);
                     root.translateXProperty();
                 }
-                else if (event.getCode() == KeyCode.RIGHT) {
-                    root.setTranslateX(root.getTranslateX() + 10);
+                else if (event.getCode() == KeyCode.D) {
+                    root.setTranslateX(root.getTranslateX() - 30);
                     root.translateXProperty();
+                }
+                else if (event.getCode() == KeyCode.W) {
+                    root.setTranslateY(root.getTranslateY() + 30);
+                    root.translateYProperty();
+                }
+                else if (event.getCode() == KeyCode.S) {
+                    root.setTranslateY(root.getTranslateY() - 30);
+                    root.translateYProperty();
                 }
             }
         });
