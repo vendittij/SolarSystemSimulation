@@ -9,9 +9,9 @@ package SolarSystem;
  *
  * @author Gabe
  */
-public class Sun extends Planet{
-    
+public class Sun extends Planet {
+
     public Sun(String name, double sunRadius, double mass) {
-        super(name,0,0,sunRadius,mass,0, 0);
+        super(name, 0, 0, sunRadius, mass, 0, 0);
     }
 }
