@@ -173,25 +173,28 @@ public class JavaFXMain extends Application {
                 } else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
-                } else if (event.getCode() == KeyCode.A) {
-                    root.setTranslateX(root.getTranslateX() - 30);
-                    //root.setTranslateX(root.getTranslateX() - 10);
-                    root.translateXProperty();
-                    translationsX += 30;
-                } else if (event.getCode() == KeyCode.D) {
+                }
+                else if (event.getCode() == KeyCode.A) {
                     root.setTranslateX(root.getTranslateX() + 30);
-                    //root.setTranslateX(root.getTranslateX() + 10);
                     root.translateXProperty();
                     translationsX -= 30;
-                } else if (event.getCode() == KeyCode.W) {
-                    root.setTranslateY(root.getTranslateY() - 30);
-                    root.translateYProperty();
-                    translationsY += 30;
-                } else if (event.getCode() == KeyCode.S) {
+                }
+                else if (event.getCode() == KeyCode.D) {
+                    root.setTranslateX(root.getTranslateX() - 30);
+                    root.translateXProperty();
+                    translationsX += 30;
+                }
+                else if (event.getCode() == KeyCode.W) {
                     root.setTranslateY(root.getTranslateY() + 30);
                     root.translateYProperty();
                     translationsY -= 30;
-                } else if (event.getCode() == KeyCode.SPACE) {
+                }
+                else if (event.getCode() == KeyCode.S) {
+                    root.setTranslateY(root.getTranslateY() - 30);
+                    root.translateYProperty();
+                    translationsY += 30;
+                }
+                else if (event.getCode() == KeyCode.SPACE) {
                     root.setTranslateY(root.getTranslateY() + translationsY);
                     root.setTranslateX(root.getTranslateX() + translationsX);
                     root.translateXProperty();

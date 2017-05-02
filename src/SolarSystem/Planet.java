@@ -23,6 +23,7 @@ import javafx.scene.shape.Sphere;
 public class Planet {
 
     private double period;
+    private double velocity;
     private double semiMinorAxis;
     private double avgDistanceFromSun;
     private double acceleration;
@@ -36,9 +37,9 @@ public class Planet {
     private double semiMajorAxis;
     private double avgVelocity;
     private ArrayList<Moon> planetMoons = new ArrayList<>();
+    private Sphere sphere;
     private Path path;
     private PathTransition pathTransition;
-    private Sphere sphere;
     private int orbitRate;
 
     /**
@@ -52,7 +53,8 @@ public class Planet {
      * @param inclination
      * @param periapsisYCoord
      */
-    public Planet(String name, double apoapsisDistance, double periapsisDistance, double planetRadius, double mass, double inclination, int rate) {
+    public Planet(String name, double apoapsisDistance, double periapsisDistance,
+                  double planetRadius, double mass, double inclination, int rate) {
 
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
@@ -60,19 +62,28 @@ public class Planet {
         this.planetRadius = planetRadius;
         this.mass = mass;
         this.inclination = inclination;
+
         this.orbitRate = rate;
         this.sphere = createSphere(this.planetRadius);
 
-        this.apoapsisDistanceFromSun = convertApoapsisDistanceToAU(this.apoapsisDistanceFromSun);
-        this.periapsisDistanceFromSun = convertPeriapsisDistanceToAU(this.periapsisDistanceFromSun);
+        this.apoapsisDistanceFromSun = convertApoapsisDistanceToAU(
+                this.apoapsisDistanceFromSun);
+        this.periapsisDistanceFromSun = convertPeriapsisDistanceToAU(
+                this.periapsisDistanceFromSun);
 
-        this.semiMajorAxis = calculatSemiMajorAxis(this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun);
-        this.eccentricity = calculatEccentricity(this.apoapsisDistanceFromSun, this.semiMajorAxis);
+        this.semiMajorAxis = calculatSemiMajorAxis(this.apoapsisDistanceFromSun,
+                                                   this.periapsisDistanceFromSun);
+        this.eccentricity = calculatEccentricity(this.apoapsisDistanceFromSun,
+                                                 this.semiMajorAxis);
         this.period = calculatePeriod(this.semiMajorAxis);
         this.avgDistanceFromSun = this.semiMajorAxis;
-        this.avgVelocity = calculateAverageVelocity(apoapsisDistanceFromSun, periapsisDistanceFromSun, mass, semiMajorAxis, this.period);
+        this.avgVelocity = calculateAverageVelocity(apoapsisDistanceFromSun,
+                                                    periapsisDistanceFromSun,
+                                                    mass, semiMajorAxis,
+                                                    this.period);
 
-        this.semiMinorAxis = calculateSemiMinorAxis(this.semiMajorAxis, this.eccentricity);
+        this.semiMinorAxis = calculateSemiMinorAxis(this.semiMajorAxis,
+                                                    this.eccentricity);
 
     }
 
@@ -207,12 +218,18 @@ public class Planet {
 
     public void setPath(BorderPane root) {
 
-        double centerX = calculateCenterX(root, this.eccentricity, this.semiMajorAxis, this.apoapsisDistanceFromSun);
+        double centerX = calculateCenterX(root, this.eccentricity,
+                                          this.semiMajorAxis,
+                                          this.apoapsisDistanceFromSun);
         double centerY = calculateCenterY(root);
-        double semiMajorAxisCoords = calculateCoordsConversion(this.semiMajorAxis);
-        double semiMinorAxisCoords = calculateCoordsConversion(this.semiMinorAxis);
-        this.path = createEllipsePath(centerX, centerY, semiMajorAxisCoords, semiMinorAxisCoords, inclination);
-        this.pathTransition = createPathTransition(this.period, this.sphere, this.path, this.orbitRate);
+        double semiMajorAxisCoords = calculateCoordsConversion(
+                this.semiMajorAxis);
+        double semiMinorAxisCoords = calculateCoordsConversion(
+                this.semiMinorAxis);
+        this.path = createEllipsePath(centerX, centerY, semiMajorAxisCoords,
+                                      semiMinorAxisCoords, inclination);
+        this.pathTransition = createPathTransition(this.period, this.sphere,
+                                                   this.path, this.orbitRate);
 
     }
 
@@ -237,7 +254,12 @@ public class Planet {
 
     @Override
     public String toString() {
-        String output = String.format("Planet: %s\nMass: %f\nAverage distance from the sun: %f\nInclination: %f\nEccentricity: %f\nRadius of planet: %f\nApoapsis Distance from the sun : %f\nPeriapsis distance from the sun: %f\nAverage velocity : %f\n", this.name, this.mass, this.semiMajorAxis, this.semiMinorAxis, this.inclination, this.eccentricity, this.planetRadius, this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun, this.avgVelocity);
+        String output = String.format(
+                "Planet: %s\nMass: %f\nAverage distance from the sun: %f\nInclination: %f\nEccentricity: %f\nRadius of planet: %f\nApoapsis Distance from the sun : %f\nPeriapsis distance from the sun: %f\nAverage velocity : %f\n",
+                this.name, this.mass, this.semiMajorAxis, this.semiMinorAxis,
+                this.inclination, this.eccentricity, this.planetRadius,
+                this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun,
+                this.avgVelocity);
         return output;
     }
 }

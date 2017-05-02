@@ -75,6 +75,7 @@ public final class Algorithms {
      */
     public static double calculatSemiMajorAxis(double apoapsisDistance,
                                                double periapsisDistance) {
+
         return (apoapsisDistance + periapsisDistance) / 2; //Very similar to how you would find radius of a circle
     }
 
@@ -128,7 +129,6 @@ public final class Algorithms {
         //May need to revise this!!!!!
         periapsis = new Point2D.Double(
                 350 + periapsisDistanceFromSun * coordinateScale, 350 - YCoord);
-
         return periapsis;
     }
 
@@ -149,7 +149,6 @@ public final class Algorithms {
         //May need to revise this!!!!!
         apoapsis = new Point2D.Double(
                 400 - apoapsisDistanceFromSun * coordinateScale, 350 + YCoord);
-
         return apoapsis;
     }
 
@@ -202,17 +201,12 @@ public final class Algorithms {
         double velocity;
         double gravitationalParameter;
         double difference;
-
         radiusFromSun = radiusFromSun * AUToKM;
         semiMajorAxis = semiMajorAxis * AUToKM;
-
         gravitationalParameter = 4 * pow(PI, 2) * pow(semiMajorAxis, 3) / pow(
                 period * 365 * 24 * 60 * 60, 2);
-
         difference = (2 / radiusFromSun) - (1 / semiMajorAxis);
-
         velocity = sqrt(gravitationalParameter * difference);
-
         return velocity;
     }
 
