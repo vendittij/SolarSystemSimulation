@@ -90,31 +90,31 @@ public class JavaFXMain extends Application {
         //Sets volume to a tenth of it's original volume.
 
         Planet earth = new Planet("Earth", EARTHAPOAPSIS, EARTHPERIAPSIS,
-                                  EARTHRADIUS, EARTHMASS, EARTHINCLINATION,
-                                  EARTHRATE);
+                EARTHRADIUS, EARTHMASS, EARTHINCLINATION,
+                EARTHRATE);
         Planet mars = new Planet("Mars", MARSAPOAPSIS, MARSPERIAPSIS, MARSRADIUS,
-                                 MARSMASS, MARSINCLINATION, MARSRATE);
+                MARSMASS, MARSINCLINATION, MARSRATE);
         Planet jupiter = new Planet("Jupter", JUPITERAPOAPSIS, JUPITERPERIAPSIS,
-                                    JUPITERRADIUS, JUPITERMASS,
-                                    JUPITERINCLINATION, JUPITERRATE);
+                JUPITERRADIUS, JUPITERMASS,
+                JUPITERINCLINATION, JUPITERRATE);
         Planet venus = new Planet("Venus", VENUSAPOAPSIS, VENUSPERIAPSIS,
-                                  VENUSRADIUS, VENUSMASS, VENUSINCLINATION,
-                                  VENUSRATE);
+                VENUSRADIUS, VENUSMASS, VENUSINCLINATION,
+                VENUSRATE);
         Planet mercury = new Planet("Mercury", MERCURYAPOAPSIS, MERCURYPERIAPSIS,
-                                    MERCURYRADIUS, MERCURYMASS,
-                                    MERCURYINCLINATION, MERCURYRATE);
+                MERCURYRADIUS, MERCURYMASS,
+                MERCURYINCLINATION, MERCURYRATE);
         Planet saturn = new Planet("Saturn", SATURNAPOAPSIS, SATURNPERIAPSIS,
-                                   SATURNRADIUS, SATURNMASS, SATURNINCLINATION,
-                                   SATURNRATE);
+                SATURNRADIUS, SATURNMASS, SATURNINCLINATION,
+                SATURNRATE);
         Planet uranus = new Planet("Uranus", URANUSAPOAPSIS, URANUSPERIAPSIS,
-                                   URANUSRADIUS, URANUSMASS, URANUSINCLINATION,
-                                   URANUSRATE);
+                URANUSRADIUS, URANUSMASS, URANUSINCLINATION,
+                URANUSRATE);
         Planet neptune = new Planet("Neptune", NEPTUNEAPOAPSIS, NEPTUNEPERIAPSIS,
-                                    NEPTUNERADIUS, NEPTUNEMASS,
-                                    NEPTUNEINCLINATION, NEPTUNERATE);
+                NEPTUNERADIUS, NEPTUNEMASS,
+                NEPTUNEINCLINATION, NEPTUNERATE);
         Planet pluto = new Planet("Pluto", PLUTOAPOAPSIS, PLUTOPERIAPSIS,
-                                  PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION,
-                                  PLUTORATE);
+                PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION,
+                PLUTORATE);
         Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
         SolarSystem test = new SolarSystem("New");
         // Wrap each planet with its respective image
@@ -155,7 +155,7 @@ public class JavaFXMain extends Application {
         PointLight light = new PointLight();
         light.setColor(Color.WHITE);
         light.relocate((primaryStage.getWidth() / 2) + 20,
-                       (primaryStage.getHeight() / 2) - 60);
+                (primaryStage.getHeight() / 2) - 60);
         light.setTranslateZ(-100);
         root.getChildren().add(light);
         Button button = new Button("Display Information");
@@ -170,51 +170,36 @@ public class JavaFXMain extends Application {
                     root.setScaleY(root.getScaleY() / 1.2);
                     //background.setFitWidth(root.getScaleX());
                     //background.fitHeightProperty().bind(primaryStage.heightProperty());
-                }
-                else if (event.getCode() == UP) {
+                } else if (event.getCode() == UP) {
                     root.setScaleX(root.getScaleX() / .8);
                     root.setScaleY(root.getScaleY() / .8);
-                }
-                else if (event.getCode() == KeyCode.A) {
-                    root.setTranslateX(root.getTranslateX() + 30);
-                    root.setTranslateX(root.getTranslateX() - 10);
-                    root.translateXProperty();
-                    translationsX += 10;
-                }
-                else if (event.getCode() == KeyCode.D) {
+                } else if (event.getCode() == KeyCode.A) {
                     root.setTranslateX(root.getTranslateX() - 30);
-                    root.setTranslateX(root.getTranslateX() + 10);
+                    //root.setTranslateX(root.getTranslateX() - 10);
                     root.translateXProperty();
-                    translationsX -= 10;
-                }
-                else if (event.getCode() == KeyCode.W) {
-                    root.setTranslateY(root.getTranslateY() - 10);
+                    translationsX += 30;
+                } else if (event.getCode() == KeyCode.D) {
+                    root.setTranslateX(root.getTranslateX() + 30);
+                    //root.setTranslateX(root.getTranslateX() + 10);
+                    root.translateXProperty();
+                    translationsX -= 30;
+                } else if (event.getCode() == KeyCode.W) {
+                    root.setTranslateY(root.getTranslateY() - 30);
                     root.translateYProperty();
-                    translationsY += 10;
-                }
-                else if (event.getCode() == KeyCode.S) {
-                    root.setTranslateY(root.getTranslateY() + 10);
+                    translationsY += 30;
+                } else if (event.getCode() == KeyCode.S) {
+                    root.setTranslateY(root.getTranslateY() + 30);
                     root.translateYProperty();
-                    translationsY -= 10;
-                }
-                else if (event.getCode() == KeyCode.SPACE) {
+                    translationsY -= 30;
+                } else if (event.getCode() == KeyCode.SPACE) {
                     root.setTranslateY(root.getTranslateY() + translationsY);
                     root.setTranslateX(root.getTranslateX() + translationsX);
                     root.translateXProperty();
                     root.translateYProperty();
                     translationsY = 0;
                     translationsX = 0;
-                }
-                else if (event.getCode() == KeyCode.P) {
+                } else if (event.getCode() == KeyCode.P) {
                     //Find pluto
-                }
-                else if (event.getCode() == KeyCode.W) {
-                    root.setTranslateY(root.getTranslateY() + 30);
-                    root.translateYProperty();
-                }
-                else if (event.getCode() == KeyCode.S) {
-                    root.setTranslateY(root.getTranslateY() - 30);
-                    root.translateYProperty();
                 }
             }
         });
