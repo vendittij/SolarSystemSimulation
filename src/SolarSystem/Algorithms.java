@@ -113,44 +113,44 @@ public final class Algorithms {
         return period;
     }
 
-    /**
-     * A method that returns the point of the periapsis of the planet
-     *
-     * @param periapsisDistanceFromSun - The distance the periapsis is from the
-     * sun
-     * @param YCoord - The Y coordinate for where to place periapsis
-     *
-     * @return Point2D.Double : Gives the point of the periapsis for the planet
-     */
-    public static Point2D.Double calculatePeriapsis(
-            double periapsisDistanceFromSun, double YCoord) {
-        Point2D.Double periapsis;
+//    /**
+//     * A method that returns the point of the periapsis of the planet
+//     *
+//     * @param periapsisDistanceFromSun - The distance the periapsis is from the
+//     * sun
+//     * @param YCoord - The Y coordinate for where to place periapsis
+//     *
+//     * @return Point2D.Double : Gives the point of the periapsis for the planet
+//     */
+//    public static Point2D.Double calculatePeriapsis(
+//            double periapsisDistanceFromSun, double YCoord) {
+//        Point2D.Double periapsis;
+//
+//        //May need to revise this!!!!!
+//        periapsis = new Point2D.Double(
+//                350 + periapsisDistanceFromSun * coordinateScale, 350 - YCoord);
+//        return periapsis;
+//    }
 
-        //May need to revise this!!!!!
-        periapsis = new Point2D.Double(
-                350 + periapsisDistanceFromSun * coordinateScale, 350 - YCoord);
-        return periapsis;
-    }
-
-    /**
-     * A method that returns the point of the apoapsis of the planet
-     *
-     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the
-     * sun
-     * @param YCoord - The Y coordinate for where to place apoapsis (relative to
-     * periapsis)
-     *
-     * @return Point2D.Double : Gives the point of the apoapsis
-     */
-    public static Point2D.Double calculateApoapsis(
-            double apoapsisDistanceFromSun, double YCoord) {
-        Point2D.Double apoapsis;
-
-        //May need to revise this!!!!!
-        apoapsis = new Point2D.Double(
-                400 - apoapsisDistanceFromSun * coordinateScale, 350 + YCoord);
-        return apoapsis;
-    }
+//    /**
+//     * A method that returns the point of the apoapsis of the planet
+//     *
+//     * @param apoapsisDistanceFromSun - The distance the apoapsis is from the
+//     * sun
+//     * @param YCoord - The Y coordinate for where to place apoapsis (relative to
+//     * periapsis)
+//     *
+//     * @return Point2D.Double : Gives the point of the apoapsis
+//     */
+//    public static Point2D.Double calculateApoapsis(
+//            double apoapsisDistanceFromSun, double YCoord) {
+//        Point2D.Double apoapsis;
+//
+//        //May need to revise this!!!!!
+//        apoapsis = new Point2D.Double(
+//                400 - apoapsisDistanceFromSun * coordinateScale, 350 + YCoord);
+//        return apoapsis;
+//    }
 
     /**
      * A method that calculates the average velocity of a planet. Uses the
