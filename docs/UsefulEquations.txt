@@ -1,0 +1,31 @@
+Links to sites with possiblyy useful equations. More can be added
+
+-------------------------------------------------------------------------------------------------------------------------------
+Building a 3D sample application: http://docs.oracle.com/javafx/8/3d_graphics/sampleapp.htm
+
+-------------------------------------------------------------------------------------------------------------------------------
+Getting started with JavaFX 3D:https://docs.oracle.com/javase/8/javafx/graphics-tutorial/javafx-3d-graphics.htm
+
+-------------------------------------------------------------------------------------------------------------------------------
+How to calculate a planet’s revolution around the sun: http://sciencing.com/calculate-planets-revolution-around-sun-8472620.html
+
+-------------------------------------------------------------------------------------------------------------------------------
+The Laws of orbit: http://hyperphysics.phy-astr.gsu.edu/hbase/kepler.html
+
+-------------------------------------------------------------------------------------------------------------------------------
+Orbits of the planet: https://www.universetoday.com/35970/orbits-of-the-planets/
+
+-------------------------------------------------------------------------------------------------------------------------------
+Circular Orbit/Earth’s gravity: http://hyperphysics.phy-astr.gsu.edu/hbase/orbv.html
+
+-------------------------------------------------------------------------------------------------------------------------------
+Equation of an ellipse: http://www.softschools.com/math/calculus/writing_the_equation_of_an_ellipse/
+
+-------------------------------------------------------------------------------------------------------------------------------
+Ellipse class for JavaFX (maybe 3D): https://docs.oracle.com/javase/8/javafx/api/javafx/scene/shape/Ellipse.html
+
+-------------------------------------------------------------------------------------------------------------------------------
+Algorithms for finding velocity in ellipse: https://en.wikipedia.org/wiki/Orbital_mechanics
+
+-------------------------------------------------------------------------------------------------------------------------------
+Calculating the position of planets: http://www.davidcolarusso.com/astro/
