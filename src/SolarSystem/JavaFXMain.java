@@ -10,23 +10,23 @@ import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import static javafx.scene.input.KeyCode.UP;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -44,7 +44,10 @@ public class JavaFXMain extends Application {
     public void start(Stage primaryStage) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         BorderPane pane = new BorderPane();
         BorderPane root = new BorderPane();
+        TabInfoPane tabs = new TabInfoPane();
+        
         pane.setCenter(root);
+        pane.setBottom(tabs);
 
         Image stars = new Image("http://i.imgur.com/PgYKaSd.jpg"); //URL for the background image
         ImagePattern pattern = new ImagePattern(stars); //Sets up an image pattern that is based off of the stars.
@@ -59,21 +62,8 @@ public class JavaFXMain extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Solar System Simulator");
-
-        //Info pane
-        SplitPane info = new SplitPane();
-        info.setOrientation(Orientation.HORIZONTAL);
-        info.setDividerPosition(1, .5);
-        info.setMinHeight(200);
-        pane.setBottom(info);
-        root.setAlignment(info, Pos.BOTTOM_LEFT);
-        info.setStyle("-fx-background-color: rgba(192, 192, 192, .4);");
-        info.getItems().add(new Label("LABELS GO HERE"));
-        Text textOut = new Text();
-        textOut.setFont(Font.font(null, FontWeight.BOLD, 30));
-        textOut.setText("INFORMATION GOES HERE");
-        textOut.setFill(Color.YELLOW);
-        info.getItems().add(textOut);
+        
+        tabs.setProperties();
 
         //Music
         File file = new File("DayAndNight.mp3");
@@ -116,6 +106,8 @@ public class JavaFXMain extends Application {
                 PLUTORADIUS, PLUTOMASS, PLUTOINCLINATION,
                 PLUTORATE);
         Sun sun = new Sun("Sun", SUNRADIUS, SUNMASS);
+        
+        
         SolarSystem test = new SolarSystem("New");
         // Wrap each planet with its respective image
         earth.setStyle(EARTHIMAGE);
@@ -141,9 +133,14 @@ public class JavaFXMain extends Application {
         test.addPlanet(neptune);
         test.addPlanet(pluto);
 
-        for (int i = 0; i < test.planetsInSystem(); i++) {
-            System.out.println(test.planetSelector(i));
-        }
+//        for (int i = 0; i < test.planetsInSystem(); i++) {
+//            System.out.println(test.planetSelector(i));
+//        }
+        
+        //Then call methods to populate the inner panes
+        //ie. overScroll.populate(), detailSplit.populate()
+        
+        tabs.populateInfo(test);
 
         primaryStage.show();
 
@@ -161,20 +158,24 @@ public class JavaFXMain extends Application {
         Button button = new Button("Display Information");
 
         test.setSystemToRoot(root); // A function that adds the solar system to the root
+        
+        
+        //TODO: OVERRIDE ARROW KEY PRESSES TO NOT SHIFT TAB PANE, BUT RATHER TO REMAIN FOR ZOOM
+        
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             // Here we write the user control handlers. These keys allow the user to navigate our Solar System using pan/zoom features.>>>>>>> 2bf0aa5b9cc54dc354b9a81bbdc0ca9c5f2f690a
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.DOWN) {
-                    root.setScaleX(root.getScaleX() / 1.2);
-                    root.setScaleY(root.getScaleY() / 1.2);
-                    //background.setFitWidth(root.getScaleX());
-                    //background.fitHeightProperty().bind(primaryStage.heightProperty());
-                } else if (event.getCode() == UP) {
-                    root.setScaleX(root.getScaleX() / .8);
-                    root.setScaleY(root.getScaleY() / .8);
-                }
-                else if (event.getCode() == KeyCode.A) {
+//                if (event.getCode() == KeyCode.DOWN) {
+//                    root.setScaleX(root.getScaleX() / 1.2);
+//                    root.setScaleY(root.getScaleY() / 1.2);
+//                    //background.setFitWidth(root.getScaleX());
+//                    //background.fitHeightProperty().bind(primaryStage.heightProperty());
+//                } else if (event.getCode() == UP) {
+//                    root.setScaleX(root.getScaleX() / .8);
+//                    root.setScaleY(root.getScaleY() / .8);
+//                } else 
+                if (event.getCode() == KeyCode.A) {
                     root.setTranslateX(root.getTranslateX() + 30);
                     root.translateXProperty();
                     translationsX -= 30;
@@ -194,16 +195,37 @@ public class JavaFXMain extends Application {
                     root.translateYProperty();
                     translationsY += 30;
                 }
-                else if (event.getCode() == KeyCode.SPACE) {
+                else if (event.getCode() == KeyCode.R){
                     root.setTranslateY(root.getTranslateY() + translationsY);
                     root.setTranslateX(root.getTranslateX() + translationsX);
                     root.translateXProperty();
                     root.translateYProperty();
                     translationsY = 0;
                     translationsX = 0;
-                } else if (event.getCode() == KeyCode.P) {
-                    //Find pluto
                 }
+                else if (event.getCode() == KeyCode.I){
+                    root.setScaleX(root.getScaleX() / .8);
+                    root.setScaleY(root.getScaleY() / .8);
+                }
+                else if (event.getCode() == KeyCode.O){
+                    root.setScaleX(root.getScaleX() / 1.2);
+                    root.setScaleY(root.getScaleY() / 1.2);
+                    //background.setFitWidth(root.getScaleX());
+                    //background.fitHeightProperty().bind(primaryStage.heightProperty());
+                }
+                
+                
+//                else if (event.getCode() == KeyCode.SPACE) {
+//                    root.setTranslateY(root.getTranslateY() + translationsY);
+//                    root.setTranslateX(root.getTranslateX() + translationsX);
+//                    root.translateXProperty();
+//                    root.translateYProperty();
+//                    translationsY = 0;
+//                    translationsX = 0;
+//                }
+//                else if (event.getCode() == KeyCode.P) {
+//                    //Find pluto
+//                }
             }
         });
     }
