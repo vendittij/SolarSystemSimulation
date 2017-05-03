@@ -6,8 +6,10 @@
 package SolarSystem;
 
 import static SolarSystem.Algorithms.*;
+import static SolarSystem.Constants.SUNRADIUS;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -56,6 +58,8 @@ public class Planet {
     public Planet(String name, double apoapsisDistance, double periapsisDistance,
                   double planetRadius, double mass, double inclination, int rate) {
 
+        System.out.println(name + " : " + planetRadius);
+        
         this.name = name;
         this.apoapsisDistanceFromSun = apoapsisDistance;
         this.periapsisDistanceFromSun = periapsisDistance;
@@ -261,5 +265,39 @@ public class Planet {
                 this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun,
                 this.avgVelocity);
         return output;
+    }
+    
+    public ArrayList<String> basicStats(){
+        ArrayList<String> overData = new ArrayList();
+//        overData.add("Name: " + this.getName());
+//        overData.add("Mass: " + String.format("%.3e", this.mass));
+//        overData.add("Radius: " + String.format("%.2f", this.getPlanetRadius()));
+//        overData.add("Period: " + String.format("%.5f", this.period));
+
+        //REVISE THESE
+
+        String output = String.format(
+                "Planet: %s\nMass: %.5e\nAvg Dist from Sun: %.5f\nInclination: %.5f\nEccentricity: %.6f\nRadius: %5.7f\nApoapsis Dist from Sun : %.4f\nPeriapsis Dist from Sun: %.4f\nAverage Velocity : %.6f\n",
+                this.name, this.mass, this.getAvgDistanceFromSun(), this.getInclination(),
+                this.eccentricity, this.planetRadius,
+                this.apoapsisDistanceFromSun, this.periapsisDistanceFromSun,
+                this.avgVelocity);
+        
+        Scanner s = new Scanner(output);
+        while (s.hasNextLine()){
+            overData.add(s.nextLine());
+        }
+                
+        if(this.name.compareTo("Sun") == 0){
+            int x = 2;
+            while(x < 9){
+                overData.set(x, "N/A");
+                x++;
+            }
+            overData.set(5, String.format("Radius: %.7f", SUNRADIUS));
+        }
+               
+        
+        return overData;
     }
 }
