@@ -238,7 +238,7 @@ public class Planet {
     }
 
     public void setStyle(String fileName) {
-        String folder = "src/DiffuseMaps/";
+        String folder = "../DiffuseMaps/";
         folder = folder.concat(fileName);
         System.out.println(folder);
 
